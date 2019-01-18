@@ -12,13 +12,13 @@
 
 namespace cs225 {
 
-	class HSLApixel {
+	class HSLAPixel {
 
 	public: 									 
 
-		HSLApixel();
-		HSLApixel(double hue, double saturation, double luminance);
-		HSLApixel(double hue, double saturation, double luminance, double alpha);
+		HSLAPixel();
+		HSLAPixel(double hue, double saturation, double luminance);
+		HSLAPixel(double hue, double saturation, double luminance, double alpha);
 
 		double h_; // [0,360]
 		double s_; // [0,1]
