@@ -13,6 +13,8 @@ using namespace std;
 
 namespace cs225 {
 
+	//Trying to send this from my pc through git to ews!
+
 HSLAPixel::HSLAPixel(){
 		h = 360;					
 		s = 100;

@@ -12,6 +12,8 @@
 
 namespace cs225 {
 
+	//trying to send this from my pc though git to ews
+
 	class HSLAPixel {
 
 	public: 									 
