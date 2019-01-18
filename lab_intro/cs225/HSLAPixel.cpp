@@ -13,8 +13,7 @@ using namespace std;
 
 namespace cs225 {
 
-	//Trying to send this from my pc through git to ews! **success now sending back to pc
-
+	
 HSLAPixel::HSLAPixel(){
 		h = 360;					
 		s = 100;
@@ -22,14 +21,14 @@ HSLAPixel::HSLAPixel(){
 		a = 1.0;
 	} 
 
-	HSLAPixel::HSLAPixel(double hue, saturation, luminance){
+	HSLAPixel::HSLAPixel(double hue, double saturation, double luminance){
 		h = hue;
 		s = saturation;
 		l = luminance;
 		a = 1.0;
 	} 
 
-	HSLAPixel::HSLAPixel(hue, saturation, luminance, alpha){
+	HSLAPixel::HSLAPixel(double hue, double saturation, double luminance, double alpha){
 		h = hue;
 		s = saturation;
 		l = luminance;
