@@ -13,7 +13,7 @@ using namespace std;
 
 namespace cs225 {
 
-	//Trying to send this from my pc through git to ews!
+	//Trying to send this from my pc through git to ews! **success now sending back to pc
 
 HSLAPixel::HSLAPixel(){
 		h = 360;					

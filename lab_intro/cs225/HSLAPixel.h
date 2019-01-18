@@ -12,7 +12,7 @@
 
 namespace cs225 {
 
-	//trying to send this from my pc though git to ews
+	//trying to send this from my pc though git to ews **sucess now sending back to pc
 
 	class HSLAPixel {
 
