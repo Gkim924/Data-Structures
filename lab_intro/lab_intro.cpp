@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <math.h>
 
 #include "cs225/PNG.h"
 #include "cs225/HSLAPixel.h"
@@ -66,9 +67,10 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x, y);
       
-       double distanceX = (centerX - x);
-       double distanceY = (centerY - y);
+       double distanceX = ((double (centerX)) - x);
+       double distanceY = ((double (centerY)) - y);
        double totalDistance = (std::sqrt ((distanceX * distanceX) + (distanceY * distanceY)));
+       
        
        if(totalDistance > 160){
          double scaleFactor = pixel.l / (1.25);
