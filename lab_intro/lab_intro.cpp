@@ -71,16 +71,16 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
        double distanceY = ((double (centerY)) - y);
        double totalDistance = (std::sqrt ((distanceX * distanceX) + (distanceY * distanceY)));
        
+       double scaleFactor = 0;
        
        if(totalDistance > 160){
-         double scaleFactor = pixel.l / (1.25);
+         scaleFactor = pixel.l / (1.25);
          pixel.l -= scaleFactor;
        }
        else {
-         pixel.l = 0.9;
+         scaleFactor = (1 - ((totalDistance * (0.5))/100));
+         pixel.l *= scaleFactor; //changes the pixel
        }
-      
-      
     }
   }
   
