@@ -61,7 +61,27 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
-
+  
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+      
+       double distanceX = (centerX - x);
+       double distanceY = (centerY - y);
+       double totalDistance = (std::sqrt ((distanceX * distanceX) + (distanceY * distanceY)));
+       
+       if(totalDistance > 160){
+         double scaleFactor = pixel.l / (1.25);
+         pixel.l -= scaleFactor;
+       }
+       else {
+         pixel.l = 0.9;
+       }
+      
+      
+    }
+  }
+  
   return image;
   
 }
@@ -87,7 +107,7 @@ PNG illinify(PNG image) {
       
       HSLAPixel & pixel = image.getPixel(x, y);
       
-      if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue)){
+      if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue))){
         pixel.h = 11.0;
       } 
       else {
