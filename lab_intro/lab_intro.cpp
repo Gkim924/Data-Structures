@@ -109,14 +109,17 @@ PNG illinify(PNG image) {
       
       HSLAPixel & pixel = image.getPixel(x, y);
       
-      if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue))){
-        pixel.h = 11.0;
-      } 
-      else {
-        pixel.h = 216.0;
+    
+        if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue))){ 
+          pixel.h = 11.0;
+        } 
+        else if((371 - pixel.h) <= (std::abs (pixel.h - blue))){
+          pixel.h = 11.0;
+        }
+        else {
+          pixel.h = 216.0;
+        }
       }
-      
-    }
   }
   
   //orange 11
