@@ -62,6 +62,8 @@ void sketchify(std::string inputFile, std::string outputFile) {
             HSLAPixel currOutPixel = (*output).getPixel(x, y);
             if (diff > 20) {
                 currOutPixel = *myPixel;
+                //add new pixel to output
+                output->getPixel(x,y) = currOutPixel;
             }
         }
     }
