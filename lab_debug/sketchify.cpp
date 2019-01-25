@@ -29,7 +29,7 @@ PNG* setupOutput(unsigned w, unsigned h) {
  * @return a pointer to the color to use when sketchifying
  */
 HSLAPixel* myFavoriteColor() {
-    HSLAPixel p(-1, 0.8, 0.5);
+    HSLAPixel p(137, 0.8, 0.5);
     return &p;
 }
 
