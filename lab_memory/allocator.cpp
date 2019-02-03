@@ -16,6 +16,11 @@ Allocator::Allocator(const std::string& studentFile, const std::string& roomFile
     createLetterGroups();
     loadStudents(studentFile);
     loadRooms(roomFile);
+
+}
+Allocator::~Allocator(){
+    delete [] alpha;
+    delete [] rooms;
 }
 
 void Allocator::createLetterGroups()
@@ -86,9 +91,6 @@ void Allocator::printRooms(std::ostream & stream /* = std::cout */)
     for (int i = 0; i < roomCount; i++)
         rooms[i].print(stream);
 
-    //adding code to try to free memory
-    delete [] alpha;
-    delete [] rooms;
 }
 
 int Allocator::solve()
