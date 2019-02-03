@@ -5,8 +5,12 @@
 
 #pragma once
 #include <iostream>
+#include "cs225/PNG.h"
+#include <cmath>
 
-class Image{
+namespace cs225 {
+
+class Image : public PNG {
 
 public:
 
@@ -24,5 +28,6 @@ public:
 	void scale(double factor);
 	void scale(unsigned w, unsigned h);
 
-}
+	};
 
+}
