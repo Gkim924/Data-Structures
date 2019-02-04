@@ -115,7 +115,17 @@ void Image::grayscale(){
 	}
 }
 void Image::rotateColor(double degrees){
-	
+	for (unsigned x = 0; x < this->width(); x++) {
+    	for (unsigned y = 0; y < this->height(); y++) {
+      		HSLAPixel & pixel = this->getPixel(x, y);
+      			if(pixel.h + degrees <= 365){
+				pixel.h += degrees;
+			} else {
+				pixel.h = 0;
+				pixel.h += degrees;
+			}
+		}
+	}
 }
 void Image::illinify(){
 	double orange = 11.0;
@@ -143,10 +153,37 @@ void Image::illinify(){
   //blue 216
 }
 void Image::scale(double factor){
+	if(factor > 0) {
+		double width = this->width();
+		double height = this->height();
+
+		scale((width*factor),(height*factor));
+	}
 	
 }
 void Image::scale(unsigned w, unsigned h){
+
+	//make copy of original image
+	PNG inputCopy(*this);
+	//resize original image to desired size
+	this->resize(w,h);
+	//write pixels from the copy into the resized original image
 	
+	double x_ratio = (inputCopy.width()) / (double) (w);
+	double y_ratio = (inputCopy.height()) / (double) (h);
+
+	double px, py;
+
+	for (unsigned x = 0; x < w; x++) {
+    	for (unsigned y = 0; y < h; y++) {
+      		HSLAPixel & inputCopyPixel = inputCopy.getPixel((int)(x*x_ratio),(int)(y*y_ratio));
+      		HSLAPixel & newPixel = this->getPixel(x,y);
+      		newPixel.h = inputCopyPixel.h;
+      		newPixel.s = inputCopyPixel.s;
+      		newPixel.l = inputCopyPixel.l;
+      		newPixel.a = inputCopyPixel.a;
+		}
+	}
 }
 
 }

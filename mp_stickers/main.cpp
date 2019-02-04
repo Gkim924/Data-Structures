@@ -9,18 +9,20 @@ int main() {
 
 	//cs225::PNG png, png2, result;
 	Image firstPic;
-	PNG secondPic(450,300);
+	
 
 	//cout << "width: " << firstPic.width() << " height: " << firstPic.height() << endl;
-	cout << "width: " << secondPic.width() << " height: " << secondPic.height() << endl;
+	//cout << "width: " << secondPic.width() << " height: " << secondPic.height() << endl;
 
   	firstPic.readFromFile("alma.png");
   	
   	//cout << "width: " << firstPic.width() << " height: " << firstPic.height() << endl;
-  	firstPic.illinify();
+  	firstPic.rotateColor(45);
 
   	firstPic.writeToFile("myImage.png");
-  	secondPic.writeToFile("otherImage.png");
+
+  	firstPic.scale(0.5);
+  	firstPic.writeToFile("otherImage.png");
 
   //
   // Reminder:
