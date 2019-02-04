@@ -115,15 +115,24 @@ void Image::grayscale(){
 	}
 }
 void Image::rotateColor(double degrees){
+
+	if(degrees != 360){
+		degrees = fmod(degrees,360);
+	}
+	
 	for (unsigned x = 0; x < this->width(); x++) {
     	for (unsigned y = 0; y < this->height(); y++) {
       		HSLAPixel & pixel = this->getPixel(x, y);
-      			if(pixel.h + degrees <= 365){
+      			
+      			if(pixel.h + degrees <= 360 && pixel.h + degrees >= 0){
 				pixel.h += degrees;
-			} else {
-				pixel.h = 0;
-				pixel.h += degrees;
-			}
+				} 
+				else if(pixel.h + degrees > 360) {
+				pixel.h = (degrees - (360 - pixel.h));
+				}
+				else if(pixel.h + degrees < 0) {
+				pixel.h = 360 + (degrees + pixel.h);
+				}
 		}
 	}
 }
