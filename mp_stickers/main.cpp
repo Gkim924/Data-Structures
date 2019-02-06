@@ -17,11 +17,12 @@ int main() {
   	firstPic.readFromFile("alma.png");
   	
   	//cout << "width: " << firstPic.width() << " height: " << firstPic.height() << endl;
-  	firstPic.rotateColor(-180);
+  	//firstPic.rotateColor(-180);
 
-  	firstPic.writeToFile("myImage.png");
+  	//firstPic.writeToFile("myImage.png");
 
-  	firstPic.scale(0.5);
+  	//firstPic.scale(450,300);
+  	firstPic.scale(.3);
   	firstPic.writeToFile("otherImage.png");
 
   //

@@ -172,6 +172,15 @@ void Image::scale(double factor){
 }
 void Image::scale(unsigned w, unsigned h){
 
+	
+	if(w < h){
+		h = (double)(w / (double)this->width()) * (this->height());
+		
+	}
+	else {
+		w = (double)(h / (double)this->height()) * (this->width());
+	}
+
 	//make copy of original image
 	PNG inputCopy(*this);
 	//resize original image to desired size
