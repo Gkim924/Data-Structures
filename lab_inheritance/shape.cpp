@@ -25,6 +25,7 @@ Shape::Shape(const Vector2& pcenter, const HSLAPixel& pcolor)
     /* Nothing.  See initialization list. */
 }
 
+
 int Shape::area() const
 {
     /* Shape's don't have an area since they cannot be made */
