@@ -8,6 +8,7 @@
 #include "Image.h"
 #include <cmath>
 #include <vector>
+#include <deque>
 
 namespace cs225 {
 
@@ -34,16 +35,19 @@ public:
 	//additional functions
 	void _delete();
 	void _copy(const StickerSheet & other);
+	void printLayer() const;
 
 private:
 
 	//pointer to base picture
 	Image* basePic_;
-	std::vector<Image*> * listPtr_;
-	std::vector<double> * coordPtr_;
-	int index_;
+	//std::vector<Image*> * listPtr_;
+	std::deque<Image*> * listPtr_;
+	//std::vector<int> * coordPtr_;
+	std::deque<int> * coordPtr_;
+	
 	int maxStickers_;
-	int stickerAmount_;
+	int stickerCount_;
 	//pointer to array of pointers for stickers
 
 

@@ -1,6 +1,7 @@
 #include "Image.h"
 #include "StickerSheet.h"
 #include <vector>
+#include <deque>
 
 using std::cout;
 using std::endl;
@@ -13,19 +14,40 @@ int main() {
 	
 	firstPic.readFromFile("alma.png");
 
-	StickerSheet firstSticker(firstPic,5);
+	StickerSheet firstStickerSheet(firstPic,5);
 
 	//cout << &firstSticker << endl;
 
-	Image sticker;
+	Image sticker1;
+	Image sticker2;
+	Image sticker3;
 
-	sticker.readFromFile("i - Copy.png");
+	sticker1.readFromFile("i - Copy1.png");
+	sticker2.readFromFile("i - Copy2.png");
+	sticker3.readFromFile("i - Copy3.png");
 
-	cout << "addr of sticker: " << &sticker << endl;
+	//cout << "before calling functions:" <<endl;
+	//cout << "addr of sticker: " << &sticker << endl;
+	//cout << "addr of sticker2: " << &sticker2 << endl;
 
-	firstSticker.addSticker(sticker,7,12);
 
-	sticker.writeToFile("stickercopytest.png");
+	//cout << "functions called: " << endl;
+	cout << firstStickerSheet.addSticker(sticker1,700,400) << endl;
+	cout << firstStickerSheet.addSticker(sticker2,300,200) << endl;
+	cout << firstStickerSheet.addSticker(sticker3,10,10) << endl;
+
+	//sticker.writeToFile("stickercopytest.png");
+
+
+	//
+	Image renderTest(sticker2);
+	firstPic = firstStickerSheet.render();
+
+	firstPic.writeToFile("rendertest.png");
+
+	//firstPic.resize(1200,800);
+	//firstPic.writeToFile("resizeTest.png");
+
 
 
 
