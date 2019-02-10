@@ -30,7 +30,7 @@ namespace cs225 {
 
 	}
 	StickerSheet::StickerSheet(const StickerSheet & other){
-
+		//copy constructor
 	}
 
 	//assignment overload operator
@@ -79,7 +79,19 @@ namespace cs225 {
 		return (stickerCount_ - 1);
 	}
 	bool StickerSheet::translate(unsigned index, unsigned x, unsigned y){
-		return true;
+		
+		if(index >= 0 && index <=listPtr_->size()){
+			coordPtr_->at(2*index) = x;
+			coordPtr_->at(2*index+1) = y;
+			//std::cout << "x coord of [0]: " << newX << std::endl;
+			//std::cout << "y coord of [0]: " << newY << std::endl;
+			return true;
+		}
+		else {
+			return false;
+		}
+
+		
 	}
 	void StickerSheet::removeSticker(unsigned index){
 		std::cout << "listPtr_ size (removeSticker called): " << listPtr_->size() << std::endl;
@@ -92,12 +104,21 @@ namespace cs225 {
 		coordPtr_->erase(coordPtr_->begin()+(index+1));
 		coordPtr_->erase(coordPtr_->begin()+(index+1));
 
+		stickerCount_--;
+
 
 	}
 	Image * StickerSheet::getSticker(unsigned index){
-		//needs implementation
-		Image * test1 = new Image();
-		return test1;
+		
+		if(index > 0 && index <=listPtr_->size()){
+			Image * returnPtr;
+			returnPtr = listPtr_->at(index);
+
+			return returnPtr;
+		} else {
+			return NULL;
+		}
+		
 	}
 	Image StickerSheet::render() const {
 

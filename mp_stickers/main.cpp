@@ -51,6 +51,12 @@ int main() {
 
 	secondPic.writeToFile("rendertestAfterRemove2.png");
 
+	firstStickerSheet.translate(1,100,100);
+
+	secondPic = firstStickerSheet.render();
+
+	secondPic.writeToFile("rendertestAfterTranslate.png");
+
 	//firstStickerSheet.removeSticker(1);
 	//firstPic = firstStickerSheet.render();
 	//.removeSticker(1);
