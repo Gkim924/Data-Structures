@@ -42,18 +42,12 @@ private:
 	//pointer to base picture
 	Image* basePic_;
 	Image* originalPic_;
-	//std::vector<Image*> * listPtr_;
+	
 	std::deque<Image*> * listPtr_;
-	//std::vector<int> * coordPtr_;
 	std::deque<int> * coordPtr_;
 	
 	int maxStickers_;
 	int stickerCount_;
-	//pointer to array of pointers for stickers
-
-
-
-
-
+	
 	};
 }

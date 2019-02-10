@@ -41,21 +41,51 @@ int main() {
 
 	//
 	//Image renderTest(sticker2);
+	
 	firstPic = firstStickerSheet.render();
-
 	firstPic.writeToFile("rendertest.png");
 
-	firstStickerSheet.removeSticker(1);
+	secondPic = firstPic;
+	secondPic.writeToFile("assign overload test.png");
 
-	secondPic = firstStickerSheet.render();
 
-	secondPic.writeToFile("rendertestAfterRemove2.png");
 
-	firstStickerSheet.translate(1,100,100);
 
-	secondPic = firstStickerSheet.render();
 
-	secondPic.writeToFile("rendertestAfterTranslate.png");
+
+
+
+
+
+
+
+
+
+	// firstPic = firstStickerSheet.render();
+
+	// firstPic.writeToFile("rendertest.png");
+
+	// firstStickerSheet.removeSticker(1);
+
+	// secondPic = firstStickerSheet.render();
+
+	// secondPic.writeToFile("rendertestAfterRemove2.png");
+
+	// firstStickerSheet.translate(1,100,100);
+
+	// secondPic = firstStickerSheet.render();
+
+	// secondPic.writeToFile("rendertestAfterTranslate.png");
+
+	// StickerSheet secondStickerSheet(firstStickerSheet);
+
+	// secondPic = secondStickerSheet.render();
+
+	// secondPic.writeToFile("rendertestAfterTranslateCCTOR.png");
+
+
+
+
 
 	//firstStickerSheet.removeSticker(1);
 	//firstPic = firstStickerSheet.render();

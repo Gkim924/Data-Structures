@@ -31,12 +31,23 @@ namespace cs225 {
 	}
 	StickerSheet::StickerSheet(const StickerSheet & other){
 		//copy constructor
+		_copy(other);
 	}
 
 	//assignment overload operator
-	//const StickerSheet & StickerSheet::operator=(const StickerSheet & other){
+	const StickerSheet & StickerSheet::operator=(const StickerSheet & other){
 	
-	//}
+		if (this == &other) {
+	       return *this;
+      	} else {
+      	_delete();
+      
+      	_copy(other);
+      	return *this;
+}
+
+
+	}
 
 	//functions
 	void StickerSheet::changeMaxStickers(unsigned max){
@@ -210,10 +221,19 @@ namespace cs225 {
 	}
 	void StickerSheet::_copy(const StickerSheet & other){
 
+		basePic_ = new Image(*other.basePic_);
+		originalPic_ = new Image(*other.originalPic_);
+	
+		listPtr_ = new std::deque<Image*>(*other.listPtr_);
+		coordPtr_ = new std::deque<int>(*other.coordPtr_);
+	
+		maxStickers_ = other.maxStickers_;
+		stickerCount_ = other.stickerCount_;
+
+
+
+
+
 	}
-
-
-
-
 
 }
