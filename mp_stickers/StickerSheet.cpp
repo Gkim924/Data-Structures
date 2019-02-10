@@ -9,16 +9,11 @@ namespace cs225 {
 		basePic_ = new Image(picture);
 		originalPic_ = new Image(picture);
 		
-		//create a vector for storing the image pointers
-		//std::vector<Image*> * stickerList = new std::vector<Image*>();
 		std::deque<Image*> * stickerList = new std::deque<Image*>();
 		listPtr_ = stickerList;
 		
-		//create a vector for storing (x,y) coordinates
-		//std::vector<int> * coordList = new std::vector<int>();
 		std::deque<int> * coordList = new std::deque<int>();
 		coordPtr_ = coordList;  
-		
 		
 		maxStickers_ = max;
 		stickerCount_ = 0;
@@ -44,8 +39,7 @@ namespace cs225 {
       
       	_copy(other);
       	return *this;
-}
-
+		}
 
 	}
 
@@ -64,29 +58,11 @@ namespace cs225 {
 
 		Image * stkPtr = &sticker;
 
-		//std::cout << "adding sticker ptr to vector" << std::endl;
-		//std::cout << "addr of sticker: " << stkPtr << std::endl;
-		//listPtr_->push_back(stkPtr);
 		listPtr_->push_back(stkPtr);
-		//std::cout << "size of vector: " << listPtr_->size() << std::endl;
-		//std::cout << "content of vector: " << listPtr_->at(0) << std::endl;
-		//std::cout << "removing from vector: " << std::endl;
-		//Image * vectorRef = listPtr_->back();
-		//std::cout << vectorRef << std::endl;
-		//push coordinates to coordList
-		//std::cout << "adding coordinates to vector" << std::endl;
-		//std::cout << "size of vector: " << coordPtr_->size() << std::endl;
-		//add x then y
+
 		coordPtr_->push_back(x);
 		coordPtr_->push_back(y);
-		//std::cout << "elements in coordPtr_: " << coordPtr_->size() << std::endl;
-		//std::cout << "size of vector: " << coordPtr_->size() << std::endl;
-		//std::cout << "content of vector: " << coordPtr_->at(0) << std::endl;
-		//std::cout << "content of vector: " << coordPtr_->at(1) << std::endl;
-
-		//update counters and indexes
-
-		//return index of added sticker
+		
 		return (stickerCount_ - 1);
 	}
 	bool StickerSheet::translate(unsigned index, unsigned x, unsigned y){
@@ -94,8 +70,7 @@ namespace cs225 {
 		if(index >= 0 && index <=listPtr_->size()){
 			coordPtr_->at(2*index) = x;
 			coordPtr_->at(2*index+1) = y;
-			//std::cout << "x coord of [0]: " << newX << std::endl;
-			//std::cout << "y coord of [0]: " << newY << std::endl;
+			
 			return true;
 		}
 		else {
@@ -105,18 +80,14 @@ namespace cs225 {
 		
 	}
 	void StickerSheet::removeSticker(unsigned index){
-		std::cout << "listPtr_ size (removeSticker called): " << listPtr_->size() << std::endl;
-
-		listPtr_->erase(listPtr_->begin()+index);
-		std::cout << "listPtr_ size (after remove): " << listPtr_->size() << std::endl;
 		
-
+		listPtr_->erase(listPtr_->begin()+index);
+		
 		//update coordinates
 		coordPtr_->erase(coordPtr_->begin()+(index+1));
 		coordPtr_->erase(coordPtr_->begin()+(index+1));
 
 		stickerCount_--;
-
 
 	}
 	Image * StickerSheet::getSticker(unsigned index){
@@ -149,7 +120,7 @@ namespace cs225 {
 
 
 		int limit = listPtr_->size();
-		std::cout << "listPtr_ size in render(): " << listPtr_->size() << std::endl;
+		
 
 		for(int i = 0; i<limit ;i++){
 
@@ -163,26 +134,13 @@ namespace cs225 {
 	//additional functions
 	void StickerSheet::printLayer(int index) const{
 
-		// !!!! might have to change it so elements are not deleted but only accessed
-
-		//Image * vectorRef = listPtr_->front();
-		Image * vectorRef = listPtr_->at(index);
-		//listPtr_->pop_front();
-		//listPtr_->at(index);
 		
-		//getting coordinates
-		//int coordRefX = coordPtr_->front();
+		Image * vectorRef = listPtr_->at(index);
+		
 		int coordRefX = coordPtr_->at(2*index);
-		std::cout << "X coord: " << coordRefX << std::endl;
-		//coordPtr_->pop_front();
-		//coordPtr_->at(index);
-		//int coordRefY = coordPtr_->front();
+		
 		int coordRefY = coordPtr_->at(2*index + 1);
-		std::cout << "Y coord: " << coordRefY << std::endl;
-		//coordPtr_->pop_front();
-		//coordPtr_->at(index+1);
-		//std::cout << "elements in coordPtr_: " << coordPtr_->size() << std::endl;
-
+		
 		//resize base pic to accomodate stickers that go outside the edge
 		int diffW = (vectorRef->width()) - (basePic_->width() - coordRefX);
 		int diffH = (vectorRef->height()) - (basePic_->height() - coordRefY);
@@ -229,10 +187,6 @@ namespace cs225 {
 	
 		maxStickers_ = other.maxStickers_;
 		stickerCount_ = other.stickerCount_;
-
-
-
-
 
 	}
 
