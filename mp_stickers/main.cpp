@@ -10,7 +10,7 @@ using namespace cs225;
 int main() {
 
 
- 	Image firstPic;
+ 	Image firstPic, secondPic;
 	
 	firstPic.readFromFile("alma.png");
 
@@ -30,20 +30,32 @@ int main() {
 	//cout << "addr of sticker: " << &sticker << endl;
 	//cout << "addr of sticker2: " << &sticker2 << endl;
 
-
+	//firstStickerSheet.removeSticker(1);
 	//cout << "functions called: " << endl;
 	cout << firstStickerSheet.addSticker(sticker1,700,400) << endl;
 	cout << firstStickerSheet.addSticker(sticker2,300,200) << endl;
 	cout << firstStickerSheet.addSticker(sticker3,10,10) << endl;
 
 	//sticker.writeToFile("stickercopytest.png");
-
+	//firstStickerSheet.removeSticker(1);
 
 	//
-	Image renderTest(sticker2);
+	//Image renderTest(sticker2);
 	firstPic = firstStickerSheet.render();
 
 	firstPic.writeToFile("rendertest.png");
+
+	firstStickerSheet.removeSticker(1);
+
+	secondPic = firstStickerSheet.render();
+
+	secondPic.writeToFile("rendertestAfterRemove2.png");
+
+	//firstStickerSheet.removeSticker(1);
+	//firstPic = firstStickerSheet.render();
+	//.removeSticker(1);
+	// = firstStickerSheet.render();
+	//.writeToFile("rendertest1.png");
 
 	//firstPic.resize(1200,800);
 	//firstPic.writeToFile("resizeTest.png");

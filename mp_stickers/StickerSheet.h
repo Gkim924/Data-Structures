@@ -35,12 +35,13 @@ public:
 	//additional functions
 	void _delete();
 	void _copy(const StickerSheet & other);
-	void printLayer() const;
+	void printLayer(int index) const;
 
 private:
 
 	//pointer to base picture
 	Image* basePic_;
+	Image* originalPic_;
 	//std::vector<Image*> * listPtr_;
 	std::deque<Image*> * listPtr_;
 	//std::vector<int> * coordPtr_;

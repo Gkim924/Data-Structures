@@ -7,6 +7,7 @@ namespace cs225 {
 
 		//takes in image ref and an integer
 		basePic_ = new Image(picture);
+		originalPic_ = new Image(picture);
 		
 		//create a vector for storing the image pointers
 		//std::vector<Image*> * stickerList = new std::vector<Image*>();
@@ -16,8 +17,8 @@ namespace cs225 {
 		//create a vector for storing (x,y) coordinates
 		//std::vector<int> * coordList = new std::vector<int>();
 		std::deque<int> * coordList = new std::deque<int>();
-		coordPtr_ = coordList;   
-
+		coordPtr_ = coordList;  
+		
 		
 		maxStickers_ = max;
 		stickerCount_ = 0;
@@ -81,6 +82,16 @@ namespace cs225 {
 		return true;
 	}
 	void StickerSheet::removeSticker(unsigned index){
+		std::cout << "listPtr_ size (removeSticker called): " << listPtr_->size() << std::endl;
+
+		listPtr_->erase(listPtr_->begin()+index);
+		std::cout << "listPtr_ size (after remove): " << listPtr_->size() << std::endl;
+		
+
+		//update coordinates
+		coordPtr_->erase(coordPtr_->begin()+(index+1));
+		coordPtr_->erase(coordPtr_->begin()+(index+1));
+
 
 	}
 	Image * StickerSheet::getSticker(unsigned index){
@@ -90,28 +101,54 @@ namespace cs225 {
 	}
 	Image StickerSheet::render() const {
 
-		while(listPtr_->size()>0){
-			printLayer();
-		}
+		//need to clear base pic
+		for (unsigned x = 0; x < originalPic_->width(); x++) {
+    		for (unsigned y = 0; y < originalPic_->height(); y++) {
+      
+      				HSLAPixel & basePixel = basePic_->getPixel(x, y);
+      				HSLAPixel & origPixel = originalPic_->getPixel(x, y);
 
+      				basePixel.h = origPixel.h;
+      				basePixel.s = origPixel.s;
+      				basePixel.l = origPixel.l;
+      				basePixel.a = origPixel.a;
+      		}
+      	}
+
+
+		int limit = listPtr_->size();
+		std::cout << "listPtr_ size in render(): " << listPtr_->size() << std::endl;
+
+		for(int i = 0; i<limit ;i++){
+
+			printLayer(i);
+		
+		}
+		
 		return *basePic_;
 	} 
 
 	//additional functions
-	void StickerSheet::printLayer() const{
+	void StickerSheet::printLayer(int index) const{
 
 		// !!!! might have to change it so elements are not deleted but only accessed
 
-		Image * vectorRef = listPtr_->front();
-		listPtr_->pop_front();
-
+		//Image * vectorRef = listPtr_->front();
+		Image * vectorRef = listPtr_->at(index);
+		//listPtr_->pop_front();
+		//listPtr_->at(index);
+		
 		//getting coordinates
-		int coordRefX = coordPtr_->front();
-		//std::cout << "X coord: " << coordRefX << std::endl;
-		coordPtr_->pop_front();
-		int coordRefY = coordPtr_->front();
-		//std::cout << "Y coord: " << coordRefY << std::endl;
-		coordPtr_->pop_front();
+		//int coordRefX = coordPtr_->front();
+		int coordRefX = coordPtr_->at(2*index);
+		std::cout << "X coord: " << coordRefX << std::endl;
+		//coordPtr_->pop_front();
+		//coordPtr_->at(index);
+		//int coordRefY = coordPtr_->front();
+		int coordRefY = coordPtr_->at(2*index + 1);
+		std::cout << "Y coord: " << coordRefY << std::endl;
+		//coordPtr_->pop_front();
+		//coordPtr_->at(index+1);
 		//std::cout << "elements in coordPtr_: " << coordPtr_->size() << std::endl;
 
 		//resize base pic to accomodate stickers that go outside the edge
@@ -146,7 +183,9 @@ namespace cs225 {
 		listPtr_ = NULL;
 		delete coordPtr_;
 		coordPtr_ = NULL;
-
+		delete originalPic_;
+		originalPic_ = NULL;
+		
 	}
 	void StickerSheet::_copy(const StickerSheet & other){
 
