@@ -44,7 +44,7 @@ int main() {
 
  	Image scaleTest;
  	scaleTest.readFromFile("alma.png");
- 	scaleTest.scale(720,10000);
+ 	scaleTest.scale(1000,700);
  	scaleTest.writeToFile("almaScaleTest.png");
 
 
@@ -54,7 +54,7 @@ int main() {
 
 
 // Image firstPic, secondPic;
-	
+
 // 	firstPic.readFromFile("alma.png");
 
 // 	StickerSheet firstStickerSheet(firstPic,5);
@@ -70,7 +70,7 @@ int main() {
 // 	cout << firstStickerSheet.addSticker(sticker1,700,400) << endl;
 // 	cout << firstStickerSheet.addSticker(sticker2,300,200) << endl;
 // 	cout << firstStickerSheet.addSticker(sticker3,10,10) << endl;
-	
+
 // 	firstPic = firstStickerSheet.render();
 // 	firstPic.writeToFile("rendertest.png");
 
@@ -109,4 +109,3 @@ int main() {
 
   return 0;
 }
-

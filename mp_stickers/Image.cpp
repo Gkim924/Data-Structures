@@ -65,7 +65,7 @@ for (unsigned x = 0; x < this->width(); x++) {
       				}
       			}
 		}
-	}	
+	}
 }
 void Image::saturate(double amount){
 	for (unsigned x = 0; x < this->width(); x++) {
@@ -91,7 +91,7 @@ for (unsigned x = 0; x < this->width(); x++) {
       				}
       			}
 		}
-	}	
+	}
 }
 void Image::desaturate(double amount){
 	for (unsigned x = 0; x < this->width(); x++) {
@@ -119,14 +119,14 @@ void Image::rotateColor(double degrees){
 	if(degrees != 360){
 		degrees = fmod(degrees,360);
 	}
-	
+
 	for (unsigned x = 0; x < this->width(); x++) {
     	for (unsigned y = 0; y < this->height(); y++) {
       		HSLAPixel & pixel = this->getPixel(x, y);
-      			
+
       			if(pixel.h + degrees <= 360 && pixel.h + degrees >= 0){
 				pixel.h += degrees;
-				} 
+				}
 				else if(pixel.h + degrees > 360) {
 				pixel.h = (degrees - (360 - pixel.h));
 				}
@@ -142,13 +142,13 @@ void Image::illinify(){
 
   for (unsigned x = 0; x < this->width(); x++) {
     for (unsigned y = 0; y < this->height(); y++) {
-      
+
       HSLAPixel & pixel = this->getPixel(x, y);
-      
-    
-        if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue))){ 
+
+
+        if((std::abs (pixel.h - orange)) <= (std::abs (pixel.h - blue))){
           pixel.h = 11.0;
-        } 
+        }
         else if((371 - pixel.h) <= (std::abs (pixel.h - blue))){
           pixel.h = 11.0;
         }
@@ -157,7 +157,7 @@ void Image::illinify(){
         }
       }
   }
-  
+
   //orange 11
   //blue 216
 }
@@ -168,14 +168,15 @@ void Image::scale(double factor){
 
 		scale((width*factor),(height*factor));
 	}
-	
+
 }
 void Image::scale(unsigned w, unsigned h){
 
-	
-	if(w < h){
+
+	// if(w < h){
+  if(width()/(double)height() > w/(double)h){
 		h = (double)(w / (double)this->width()) * (this->height());
-		
+
 	}
 	else {
 		w = (double)(h / (double)this->height()) * (this->width());
@@ -186,7 +187,7 @@ void Image::scale(unsigned w, unsigned h){
 	//resize original image to desired size
 	this->resize(w,h);
 	//write pixels from the copy into the resized original image
-	
+
 	double x_ratio = (inputCopy.width()) / (double) (w);
 	double y_ratio = (inputCopy.height()) / (double) (h);
 
