@@ -26,10 +26,10 @@ int main() {
  	//667x668
  	logo.readFromFile("CppLogo.png");
 
- 	//text1.scale(100,100);
- 	//text2.scale(100,100);
+ 	//.scale(.7);
+ 	//text2.scale(.7);
  	face.scale(1.2);
- 	//logo.scale(.3);
+ 	//logo.scale(5);
 
  	StickerSheet memeSticker(firstPic,5);
 
@@ -41,6 +41,13 @@ int main() {
  	firstPic = memeSticker.render();
 
  	firstPic.writeToFile("myImage.png");
+
+ 	Image scaleTest;
+ 	scaleTest.readFromFile("alma.png");
+ 	scaleTest.scale(720,10000);
+ 	scaleTest.writeToFile("almaScaleTest.png");
+
+
 
 
 
