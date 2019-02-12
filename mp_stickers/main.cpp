@@ -42,16 +42,15 @@ int main() {
 
  	firstPic.writeToFile("myImage.png");
 
- 	Image scaleTest;
- 	scaleTest.readFromFile("alma.png");
- 	scaleTest.scale(1000,700);
- 	scaleTest.writeToFile("almaScaleTest.png");
+	
+
+ 
 
 
-
-
-
-
+	// Image scaleTest;
+ // 	scaleTest.readFromFile("alma.png");
+ // 	scaleTest.scale(1000,700);
+ // 	scaleTest.writeToFile("almaScaleTest.png");
 
 // Image firstPic, secondPic;
 

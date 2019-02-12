@@ -80,19 +80,19 @@ namespace cs225 {
 
 	}
 	void StickerSheet::removeSticker(unsigned index){
-
+		
 		listPtr_->erase(listPtr_->begin()+index);
-
+		
 		//update coordinates
-		coordPtr_->erase(coordPtr_->begin()+(index+1));
-		coordPtr_->erase(coordPtr_->begin()+(index+1));
+		coordPtr_->erase(coordPtr_->begin()+(2*index));
+		coordPtr_->erase(coordPtr_->begin()+(2*index));
 
 		stickerCount_--;
 
 	}
 	Image * StickerSheet::getSticker(unsigned index){
 
-		if(index > 0 && index <=listPtr_->size()){
+		if(index <=listPtr_->size()){
 			Image * returnPtr;
 			returnPtr = listPtr_->at(index);
 
