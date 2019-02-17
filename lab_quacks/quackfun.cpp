@@ -31,7 +31,18 @@ T sum(stack<T>& s)
 {
 
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+    T total = T();
+    T temp = T(); 
+
+    if(s.size()>0){
+        temp = s.top();
+        s.pop();
+        total = temp + sum(s);
+        s.push(temp);
+    }
+       
+
+    return total; // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
@@ -57,7 +68,32 @@ bool isBalanced(queue<char> input)
 {
 
     // @TODO: Make less optimistic
-    return true;
+    std::stack<char> testStack;
+
+    //push left brackets into stack, when right bracket is encountered pop,
+    //check stack at end if anything left its unbalanced
+    while(!input.empty()){
+        if(input.front()==']' && testStack.size()==0){
+            return false;
+        }
+        if(input.front()=='['){
+            testStack.push(input.front());
+        }
+        if(input.front()==']'){
+            if(testStack.top()=='['){
+                if(!testStack.empty()){
+                    testStack.pop();
+                }   
+            }
+        }
+        input.pop();
+    }
+
+    if(testStack.size()==0){
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -79,9 +115,40 @@ template <typename T>
 void scramble(queue<T>& q)
 {
     stack<T> s;
-    // optional: queue<T> q2;
+    queue<T> q2;
 
     // Your code here
+    int index = 0;
+    
+    while(q.size()>0){
+
+        index ++;
+        if(index%2==0){
+            for(int i=0;i<index;i++){
+                if(q.empty()){
+                    break;
+                }
+                s.push(q.front());
+                q.pop();
+            }
+        while(s.size()>0){
+            q2.push(s.top());
+            s.pop();
+            } 
+        } else if (index%2==1){
+            for(int i=0;i<index;i++){
+                if(q.empty()){
+                    break;
+                }
+                q2.push(q.front());
+                q.pop();
+            }
+        }
+    }
+    while(q2.size()>0){
+        q.push(q2.front());
+        q2.pop();
+    }
 }
 
 /**
@@ -110,10 +177,33 @@ template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
 {
     bool retval = true; // optional
-    // T temp1; // rename me
-    // T temp2; // rename :)
+    T stackEntry; // rename me
+    T queueEntry; // rename :)
 
     // Your code here
+    if(s.empty()){
+        return true; //since the ADTs are the same size no elements == same
+    }
+    
+    //start popping stack and recurse to get to the bottom
+    stackEntry = s.top();
+    s.pop();
+    retval = verifySame(s,q); 
+
+    //once recursive frame with an empty stack is reached 
+    //stack bottom can be compared with queue front
+
+    s.push(stackEntry); //restoring stack
+    if(stackEntry==q.front() && retval==true){
+        retval = true;
+    } else {                //compare retval from previous frames to current frame
+        retval = false;
+    }
+
+    //rotate the queue so all the elements can be compared with the stack
+    q.push(q.front());
+    q.pop();
+
 
     return retval;
 }
