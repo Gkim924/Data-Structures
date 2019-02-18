@@ -12,12 +12,19 @@ int main() {
 	//***** write _destroy() and destructor
 
 	first.insertFront(7);
+	//first.insertBack(5);
 
 	std::cout << "list size after addition: " << first.size() << std::endl;
 
 	first.insertFront(2);
+	//first.insertBack(1);
 
 	std::cout << "list size after addition: " << first.size() << std::endl;
+
+	first.insertBack(5);
+
+	std::cout << "list size after addition: " << first.size() << std::endl;
+	
 
 
 

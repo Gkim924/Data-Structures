@@ -39,7 +39,22 @@ typename List<T>::ListIterator List<T>::end() const {
 template <typename T>
 void List<T>::_destroy() {
   /// @todo Graded in MP3.1
+  ListNode * curr = head_;
+  ListNode * temp;
+
+  head_= NULL;
+  tail_ = NULL;
   
+  while(curr!=NULL){
+    temp = curr;
+    curr = curr->next;
+    
+    delete temp;
+    
+  }
+  
+
+
     
 }
 
@@ -53,16 +68,22 @@ template <typename T>
 void List<T>::insertFront(T const & ndata) {
   /// @todo Graded in MP3.1
   ListNode * newNode = new ListNode(ndata);
+  ListNode * temp;
   
   //case 1: list is empty
   if (length_==0) {
     head_ = newNode;
     tail_ = newNode;
-  }
+    length_++;
+    return;
+    }
 
   //case 2: list not empty
-  newNode->next = head_;
+  temp = head_;
   head_ = newNode;
+  head_->next = temp;
+  temp->prev = head_;
+
   
   //***Given code
   // newNode -> next = head_;
@@ -90,18 +111,25 @@ template <typename T>
 void List<T>::insertBack(const T & ndata) {
   /// @todo Graded in MP3.1
   ListNode * newNode = new ListNode(ndata);
+  ListNode * temp;
 
   //case 1: list is empty
   if (length_==0) {
     head_ = newNode;
     tail_ = newNode;
+    length_++;
+    return;
   }
 
   //case 2: list not empty
-  tail_->next = newNode;
+  temp = tail_;
   tail_ = newNode;
+  head_->prev = temp;
+  temp->next = tail_;
 
   length_++;
+
+  //std::cout<< "next ptr:" << newNode->next << std::endl;
 
 }
 
