@@ -7,23 +7,52 @@ int main() {
 
 	List<int> first;
 
-	std::cout << "list size: " << first.size() << std::endl;
-
-	//***** write _destroy() and destructor
-
-	first.insertFront(7);
-	//first.insertBack(5);
-
-	std::cout << "list size after addition: " << first.size() << std::endl;
-
+	first.insertFront(1);
 	first.insertFront(2);
-	//first.insertBack(1);
+	first.insertFront(3);
+	first.insertFront(4);
 
-	std::cout << "list size after addition: " << first.size() << std::endl;
+	// first.insertBack(1);
+	// first.insertBack(2);
+	// first.insertBack(3);
+	// first.insertBack(4);
+	
+	
+	//std::cout << "list size after additions: " << first.size() << std::endl;
 
-	first.insertBack(5);
+	//List<int>::ListIterator checkF = first.begin();
+	//List<int>::ListIterator checkB = first.end();
 
-	std::cout << "list size after addition: " << first.size() << std::endl;
+	//int test = *checkF;
+	
+
+	//std::cout << "contents of end iterator: " << test << std::endl;
+	//checkF++;
+	//checkF++;
+	//checkF--;
+
+	//test = *checkF;
+	//std::cout << "contents from iterator: " << test << std::endl;
+	// checkF++;
+	// test = *checkF;
+	// std::cout << "contents from iterator: " << test << std::endl;
+	
+
+	// std::cout << "contents of head from iterator: " << test << std::endl;
+	// std::cout << "incrementing iterator" << std::endl;
+	// checkF++;
+	// test = *checkF;
+	// std::cout << "contents of iterator: " << test << std::endl;
+	// std::cout << "decrementing iterator" << std::endl;
+	// checkF--;
+	// test = *checkF;
+	// std::cout << "contents of iterator: " << test << std::endl;
+	
+  	
+
+	
+
+	
 	
 
 

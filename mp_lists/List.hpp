@@ -6,8 +6,8 @@
 template <class T>
 List<T>::List() { 
   // @TODO: graded in MP3.1
-    ListNode* head_ = NULL;
-    ListNode* tail_ = NULL;
+    head_ = NULL;
+    tail_ = NULL;
 
     length_ = 0;
 }
@@ -19,7 +19,10 @@ List<T>::List() {
 template <typename T>
 typename List<T>::ListIterator List<T>::begin() const {
   // @TODO: graded in MP3.1
-  return List<T>::ListIterator(NULL);
+  
+
+  return List<T>::ListIterator(head_);
+  //return List<T>::ListIterator(NULL);
 }
 
 /**
@@ -28,7 +31,9 @@ typename List<T>::ListIterator List<T>::begin() const {
 template <typename T>
 typename List<T>::ListIterator List<T>::end() const {
   // @TODO: graded in MP3.1
+
   return List<T>::ListIterator(NULL);
+  //return List<T>::ListIterator(NULL);
 }
 
 
@@ -53,9 +58,6 @@ void List<T>::_destroy() {
     
   }
   
-
-
-    
 }
 
 /**
@@ -68,7 +70,9 @@ template <typename T>
 void List<T>::insertFront(T const & ndata) {
   /// @todo Graded in MP3.1
   ListNode * newNode = new ListNode(ndata);
-  ListNode * temp;
+  //ListNode * temp;
+
+  std::cout << "node added from front: " << std::endl;
   
   //case 1: list is empty
   if (length_==0) {
@@ -79,11 +83,15 @@ void List<T>::insertFront(T const & ndata) {
     }
 
   //case 2: list not empty
-  temp = head_;
-  head_ = newNode;
-  head_->next = temp;
-  temp->prev = head_;
+  // temp = head_;
+  // head_ = newNode;
+  // head_->next = temp;
+  // temp->prev = head_;
 
+
+  newNode->next = head_;
+  head_->prev = newNode;
+  head_ = newNode;
   
   //***Given code
   // newNode -> next = head_;
@@ -124,12 +132,10 @@ void List<T>::insertBack(const T & ndata) {
   //case 2: list not empty
   temp = tail_;
   tail_ = newNode;
-  head_->prev = temp;
+  tail_->prev = temp;
   temp->next = tail_;
 
   length_++;
-
-  //std::cout<< "next ptr:" << newNode->next << std::endl;
 
 }
 
