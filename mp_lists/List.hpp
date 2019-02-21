@@ -246,6 +246,34 @@ void List<T>::reverse() {
 template <typename T>
 void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
   /// @todo Graded in MP3.2
+
+  //calcuate how many nodes should be reversed
+  ListNode * begin = endPoint;
+  ListNode * end = startPoint;
+  ListNode * curr = begin;
+  ListNode * swap;
+
+  //reassign head and tail in case of full reversal
+  if(startPoint==this->head_ && endPoint==this->tail_){
+    for(int i=0;i<this->size()-2;i++){
+    swap = begin->prev;
+    begin->prev = swap->prev;
+    swap->prev->next = begin;
+    swap->prev = curr;
+    curr->next = swap;
+    swap->next = NULL;
+    curr = swap;
+    }
+
+  swap = begin->prev;
+  begin->prev = NULL;
+  swap->next = NULL;
+  swap->prev = curr;
+  curr->next = swap;
+
+  this->head_ = begin;
+  this->tail_ = swap;
+  }
 }
 
 /**

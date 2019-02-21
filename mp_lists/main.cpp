@@ -7,10 +7,10 @@ int main() {
 
 	List<int> first;
 
-	first.insertFront(8);
-	first.insertFront(7);
-	first.insertFront(6);
-	first.insertFront(5);
+	//first.insertFront(8);
+	//first.insertFront(7);
+	//first.insertFront(6);
+	//first.insertFront(5);
 	first.insertFront(4);
 	first.insertFront(3);
 	first.insertFront(2);
@@ -24,9 +24,13 @@ int main() {
 	
 	std::cout << "list size after additions: " << first.size() << std::endl;
 	first.print();
-	first.waterfall();
+	//std::cout << std::endl;
+	//first.waterfall();
+	//first.print();
+	std::cout << std::endl;
+	first.reverse();
 	first.print();
-
+	std::cout << std::endl;
 
 	//List<int>::ListIterator checkF = first.begin();
 	//List<int>::ListIterator checkB = first.end();
