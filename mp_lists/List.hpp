@@ -72,7 +72,7 @@ void List<T>::insertFront(T const & ndata) {
   ListNode * newNode = new ListNode(ndata);
   //ListNode * temp;
 
-  std::cout << "node added from front: " << std::endl;
+  //std::cout << "node added from front: " << std::endl;
   
   //case 1: list is empty
   if (length_==0) {
@@ -194,6 +194,34 @@ typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
 template <typename T>
 void List<T>::waterfall() {
   /// @todo Graded in MP3.1
+  int count = this->size();
+
+  //std::cout << "waterfall size: " << count << std::endl;
+
+  //move to node at index 1
+  ListNode * curr = head_->next;
+  ListNode * temp;
+  ListNode * next;
+  ListNode * prev;
+
+  //iterate through all indices until tail
+  for(int i=1;i<count-1;i++){
+    //swap
+    //move current over to next even index
+    prev = curr->prev;
+    next = curr->next;
+    //use temp to do the move
+    temp = curr;
+    curr = curr->next->next;
+    prev->next = next;
+    next->prev = prev;
+    temp->prev = tail_;
+    temp->next = NULL;
+    tail_->next = temp;
+    this->tail_ = temp;
+    
+  }
+
 }
 
 /**
