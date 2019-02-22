@@ -31,6 +31,9 @@ int main() {
 	first.reverse();
 	first.print();
 	std::cout << std::endl;
+	first.reverseNth(3);
+	first.print();
+
 
 	//List<int>::ListIterator checkF = first.begin();
 	//List<int>::ListIterator checkB = first.end();

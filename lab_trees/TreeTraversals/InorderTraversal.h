@@ -25,8 +25,17 @@ class InorderTraversal : public TreeTraversal<T> {
     InorderTraversal(typename BinaryTree<T>::Node* root)
 	    : root(root)
     {
-      stack.push(root);	
+      //stack.push(root);	
       // your code here
+        typename BinaryTree<T>::Node* curr = root;
+    
+        while(curr!=NULL){
+            stack.push(curr);
+            curr = curr->left;
+        }
+        
+        
+
     }
 
     /**
@@ -61,7 +70,31 @@ class InorderTraversal : public TreeTraversal<T> {
      */	
     void add(typename BinaryTree<T>::Node *& treeNode) {
       // your code here
-      return;	
+
+        
+            
+
+            if(treeNode->left!=NULL){
+
+            
+            }
+
+            if(treeNode->right!=NULL){
+
+
+                typename BinaryTree<T>::Node* curr = treeNode;
+                curr = curr->right;
+    
+                while(curr!=NULL){
+                    stack.push(curr);
+                    curr = curr->left;
+                }
+
+
+            //stack.push(treeNode->right);
+            
+        }
+ 
     }
 
     /**

@@ -192,7 +192,8 @@ class BinaryTree
          */
         void printLeftToRight(const Node* subRoot) const;
 
-
+        //Private helper function for mirror
+        void mirror(Node* subRoot);
 
 
         /**

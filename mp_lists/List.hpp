@@ -251,6 +251,7 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
   ListNode * begin = endPoint;
   ListNode * end = startPoint;
   ListNode * curr = begin;
+  ListNode * temp = begin;
   ListNode * swap;
 
   //reassign head and tail in case of full reversal
@@ -273,7 +274,42 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
 
   this->head_ = begin;
   this->tail_ = swap;
+
+  return;
   }
+
+  //for reverse Nth
+  //calculate range
+  int range = 1;
+  ListNode * count = startPoint;
+  while(count!=endPoint){
+    count = count->next;
+    range++;
+  }
+
+  for(int i=0;i<range-1;i++){
+    swap = begin->prev;
+    curr = temp->next;
+    temp->prev = swap->prev;
+    swap->prev->next = temp;
+
+    temp->next = swap;
+    swap->prev = temp;
+    swap->next = curr;
+    curr->prev = swap;
+    temp = swap
+    }
+
+  
+
+
+
+  //go in both directions to find new head and tail
+  this->head_ = begin;
+  this->tail_ = swap;
+
+
+
 }
 
 /**
@@ -285,6 +321,30 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
 template <typename T>
 void List<T>::reverseNth(int n) {
   /// @todo Graded in MP3.2
+    ListNode * startPt = this->head_;
+    ListNode * endPt this->head_;
+    
+    std::cout << "reverseNth(" << n << ")" << std::endl;
+    int count = this->size() / n;
+    int remain = this->size() % n;
+    std::cout << "reversals: " << count << std::endl;
+
+    //get startPt and endPt
+    for(int i=0;i<count;i++){
+      
+      for(int j=0;j<n;j++){
+        endPt = endPt->next;
+      }
+      reverse(startPt,endPt);
+      startPt = endPt->next;
+      endPt = startPt;
+    }
+    //reverse remaining entries
+
+    for(int k=0;k<remain;k++){
+      endPt = endPt->next;
+    }
+    reverse(startPt,endPt);
 }
 
 
