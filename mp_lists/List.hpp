@@ -287,27 +287,128 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
     range++;
   }
 
+
+  if(endPoint==this->tail_){
+    // std::cout << "reversetail section!" << std::endl;
+    // std::cout << "head: " << this->head_->data << std::endl;
+    // std::cout << "tail: " << this->tail_->data << std::endl;
+    // std::cout << "startPt: " << startPoint->data << std::endl;
+    // std::cout << "endPt: " << endPoint->data << std::endl;
+    // ListNode * pos = this->head_;
+    // while(pos!=NULL){
+    //   std::cout << pos->data << "/";
+    //   pos = pos->next;
+    // }
+    // std::cout << std::endl;
+    for(int i=0;i<range-1;i++){
+      swap = begin->prev;
+      curr = swap->prev;
+      begin->prev = curr;
+      curr->next = begin;
+      temp->next = swap;
+      swap->prev = temp;
+      swap->next = NULL;
+      curr = curr->prev;
+      temp = swap;
+      swap = begin->prev;
+    }
+    //last swap
+    // begin->prev = curr;
+    // curr->next = begin;
+    // temp->next = swap;
+    // swap->prev = temp;
+    // swap->next = NULL;
+
+
+    //go in both directions to find new head and tail using temp and swap
+    while(curr->prev!=NULL){
+      
+      curr = curr->prev;
+    }
+    while(begin->next!=NULL){
+
+      begin = begin->next;
+    }
+    this->head_ = curr;
+    this->tail_ = temp;
+    //std::cout << "tail: " << this->tail_->data << std::endl;
+    
+    return;
+  }
+
+  //std::cout << "Block reverse" << std::endl;
   for(int i=0;i<range-1;i++){
     swap = begin->prev;
+    //reverse around the tail
+    // if(temp==this->tail_){
+    //   curr = swap->prev;
+    //   curr->next = begin;
+    //   begin->prev = curr;
+    //   begin->next = swap;
+    //   swap->prev = begin;
+    //   swap->next = NULL;
+    //   break;
+    // }
     curr = temp->next;
-    temp->prev = swap->prev;
-    swap->prev->next = temp;
+    if(swap==this->head_){
+      begin->prev = NULL;
+      swap->prev = temp;
+      temp->next = swap;
+      swap->next = curr;
+      curr->prev = swap;
+      break;
+    }
+    begin->prev = swap->prev;
+    swap->prev->next = begin;
 
     temp->next = swap;
     swap->prev = temp;
     swap->next = curr;
     curr->prev = swap;
-    temp = swap
+    temp = swap;
     }
 
-  
+  //go in both directions to find new head and tail using temp and swap
+  while(temp->prev!=NULL){
+    temp = temp->prev;
+  }
+  while(begin->next!=NULL){
+    begin = begin->next;
+  }
+  this->head_ = temp;
+  this->tail_ = begin;
 
 
+  // for(int i=0;i<range-1;i++){
+  //   swap = begin->prev;
+  //   //reverse around the tail
+  //   if(temp==this->tail_){
+  //     curr = swap->prev;
+  //     curr->next = begin;
+  //     begin->prev = curr;
+  //     begin->next = swap;
+  //     swap->prev = begin;
+  //     swap->next = NULL;
+  //     break;
+  //   }
+  //   curr = temp->next;
+  //   if(swap==this->head_){
+  //     begin->prev = NULL;
+  //     swap->prev = temp;
+  //     temp->next = swap;
+  //     swap->next = curr;
+  //     curr->prev = swap;
+  //     break;
+  //   }
+  //   begin->prev = swap->prev;
+  //   swap->prev->next = begin;
 
-  //go in both directions to find new head and tail
-  this->head_ = begin;
-  this->tail_ = swap;
-
+  //   temp->next = swap;
+  //   swap->prev = temp;
+  //   swap->next = curr;
+  //   curr->prev = swap;
+  //   temp = swap;
+  //   }
 
 
 }
@@ -322,29 +423,47 @@ template <typename T>
 void List<T>::reverseNth(int n) {
   /// @todo Graded in MP3.2
     ListNode * startPt = this->head_;
-    ListNode * endPt this->head_;
+    ListNode * endPt = this->head_;
     
-    std::cout << "reverseNth(" << n << ")" << std::endl;
+    //std::cout << "reverseNth(" << n << ")" << std::endl;
     int count = this->size() / n;
     int remain = this->size() % n;
-    std::cout << "reversals: " << count << std::endl;
+    //std::cout << "blocks of (" << n << "): " << count << std::endl;
 
     //get startPt and endPt
     for(int i=0;i<count;i++){
       
-      for(int j=0;j<n;j++){
+      for(int j=0;j<n-1;j++){
         endPt = endPt->next;
       }
+      //save start and end point and move
+      //std::cout << "startPt: " << startPt->data << std::endl;
+      //std::cout << "endPt: " << endPt->data << std::endl;
       reverse(startPt,endPt);
-      startPt = endPt->next;
+      startPt = startPt->next;
       endPt = startPt;
     }
     //reverse remaining entries
-
-    for(int k=0;k<remain;k++){
+    // if(remain>=0){
+    // for(int k=0;k<remain;k++){
+    //   endPt = endPt->next;
+    // }
+    // reverse(startPt,endPt);
+    // }
+    if(remain == 1){
+      return;
+    }
+    if(remain>0){
+    while(endPt->next!=NULL){
       endPt = endPt->next;
     }
+    // std::cout << "raminRev" << std::endl;
+    // std::cout << "startPt: " << startPt->data << std::endl;
+    // std::cout << "endPt: " << endPt->data << std::endl;
+    // std::cout << "tail: " << this->tail_->data << std::endl;
+
     reverse(startPt,endPt);
+    }
 }
 
 

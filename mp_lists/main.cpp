@@ -7,10 +7,13 @@ int main() {
 
 	List<int> first;
 
-	//first.insertFront(8);
-	//first.insertFront(7);
-	//first.insertFront(6);
-	//first.insertFront(5);
+	first.insertFront(11);
+	first.insertFront(10);
+	first.insertFront(9);
+	first.insertFront(8);
+	first.insertFront(7);
+	first.insertFront(6);
+	first.insertFront(5);
 	first.insertFront(4);
 	first.insertFront(3);
 	first.insertFront(2);
@@ -28,8 +31,8 @@ int main() {
 	//first.waterfall();
 	//first.print();
 	std::cout << std::endl;
-	first.reverse();
-	first.print();
+	//first.reverse();
+	//first.print();
 	std::cout << std::endl;
 	first.reverseNth(3);
 	first.print();
