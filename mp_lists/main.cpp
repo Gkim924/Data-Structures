@@ -6,6 +6,7 @@ int main() {
 	std::cout << "making new list" << std::endl;
 
 	List<int> first;
+	List<int> second;
 
 	first.insertFront(11);
 	first.insertFront(10);
@@ -27,15 +28,22 @@ int main() {
 	
 	std::cout << "list size after additions: " << first.size() << std::endl;
 	first.print();
-	//std::cout << std::endl;
+	std::cout << std::endl;
 	//first.waterfall();
 	//first.print();
-	std::cout << std::endl;
+	//std::cout << std::endl;
 	//first.reverse();
 	//first.print();
+	//std::cout << std::endl;
+	//first.reverseNth(3);
+	//first.print();
+	//std::cout << std::endl;
+	second = first.split(0);
+	second.print();
 	std::cout << std::endl;
-	first.reverseNth(3);
 	first.print();
+	std::cout << std::endl;
+
 
 
 	//List<int>::ListIterator checkF = first.begin();
