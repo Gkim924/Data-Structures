@@ -512,7 +512,82 @@ void List<T>::mergeWith(List<T> & otherList) {
 template <typename T>
 typename List<T>::ListNode * List<T>::merge(ListNode * first, ListNode* second) {
   /// @todo Graded in MP3.2
-  return NULL;
+  ListNode * main = first;
+  ListNode * insert = second;
+  
+
+  //merge into list with lower starting value - can add to the right
+  if(first->data<second->data){
+    //std::cout << "mering into first" << std::endl;
+    main = first;
+    insert = second;
+  }
+  else {
+    //std::cout << "merging into second" << std::endl;
+    main = second;
+    insert = first;
+  }
+
+
+  ListNode * swap;
+  ListNode * mainCurr;
+  //iterate over both lists
+  while(insert!=NULL){
+
+    if(insert->data==main->data && main->prev==NULL){ //insert on right
+      swap = insert;
+      insert = insert->next;
+      if(insert!=NULL){
+        insert->prev = NULL;
+      }
+      mainCurr = main->next;
+      main->next = swap;
+      swap->prev = main;
+      swap->next = mainCurr;
+      mainCurr->prev = swap;
+      main = swap;
+      if(insert==NULL){
+        while(swap->prev!=NULL){
+        swap = swap->prev;
+      }
+      return swap;
+      }
+    }
+
+    if(insert->data<main->data){  //insert on the left
+      swap = insert;
+      mainCurr = main->prev;
+      insert = insert->next;
+      if(insert!=NULL){
+      insert->prev = NULL;
+      }
+      swap->prev = mainCurr;
+      mainCurr->next = swap;
+      main->prev = swap;
+      swap->next = main;
+      main = swap;
+    }
+    swap = main;
+    main = main->next;
+    if(main==NULL){ // rest of numbers in insert are greater just add rest of list
+      //main = swap->next;
+      main = swap;
+      main->next = insert;
+      insert->prev = main;
+      //return to head 
+      while(swap->prev!=NULL){
+        swap = swap->prev;
+      }
+      return swap;
+    }
+
+  }
+
+
+  while(swap->prev!=NULL){
+        swap = swap->prev;
+      }
+  return swap;
 }
 
 /**

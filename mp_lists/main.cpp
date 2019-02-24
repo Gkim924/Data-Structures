@@ -7,28 +7,44 @@ int main() {
 
 	List<int> first;
 	List<int> second;
+	List<int> * temp;
 
-	first.insertFront(11);
-	first.insertFront(10);
-	first.insertFront(9);
+	
+	
+	//first.insertFront(6);
+	//first.insertFront(4);
+	//first.insertFront(3);
 	first.insertFront(8);
-	first.insertFront(7);
-	first.insertFront(6);
-	first.insertFront(5);
-	first.insertFront(4);
-	first.insertFront(3);
-	first.insertFront(2);
-	first.insertFront(1);
 
-	// first.insertBack(1);
-	// first.insertBack(2);
-	// first.insertBack(3);
-	// first.insertBack(4);
+	
+	second.insertFront(7);
+	second.insertFront(5);
+	second.insertFront(2);
+	second.insertFront(1);
+
 	
 	
-	std::cout << "list size after additions: " << first.size() << std::endl;
+	
+	std::cout << "first list size after additions: " << first.size() << std::endl;
+	std::cout << "second list size after additions: " << second.size() << std::endl;
 	first.print();
 	std::cout << std::endl;
+	second.print();
+	std::cout << std::endl;
+
+	first.mergeWith(second);
+	first.print();
+	std::cout << std::endl;
+	second.print();
+	std::cout << std::endl;
+
+
+
+
+
+
+
+
 	//first.waterfall();
 	//first.print();
 	//std::cout << std::endl;
@@ -38,13 +54,17 @@ int main() {
 	//first.reverseNth(3);
 	//first.print();
 	//std::cout << std::endl;
-	second = first.split(0);
-	second.print();
-	std::cout << std::endl;
-	first.print();
-	std::cout << std::endl;
+	// second = first.split(0);
+	// second.print();
+	// std::cout << std::endl;
+	// first.print();
+	// std::cout << std::endl;
 
 
+	// first.insertBack(1);
+	// first.insertBack(2);
+	// first.insertBack(3);
+	// first.insertBack(4);
 
 	//List<int>::ListIterator checkF = first.begin();
 	//List<int>::ListIterator checkB = first.end();
