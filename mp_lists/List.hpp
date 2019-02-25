@@ -604,5 +604,17 @@ typename List<T>::ListNode * List<T>::merge(ListNode * first, ListNode* second) 
 template <typename T>
 typename List<T>::ListNode* List<T>::mergesort(ListNode * start, int chainLength) {
   /// @todo Graded in MP3.2
-  return NULL;
+  ListNode * orig;
+  ListNode * split;
+
+  if(chainLength==1){
+    return start;
+  }
+  split = List<T>::split(start,chainLength/2);
+  orig = start; 
+  split = mergesort(split,(chainLength-(chainLength/2)));
+  orig = mergesort(orig,(chainLength/2));
+
+
+  return merge(orig,split);
 }

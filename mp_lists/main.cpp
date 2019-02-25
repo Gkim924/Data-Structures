@@ -7,9 +7,17 @@ int main() {
 
 	List<int> first;
 	List<int> second;
-	List<int> * temp;
+	List<int> third;
 
-	
+	third.insertFront(9);
+	third.insertFront(2);
+	third.insertFront(7);
+	third.insertFront(3);
+	third.insertFront(4);
+	third.insertFront(8);
+	third.insertFront(5);
+	third.insertFront(1);
+	third.insertFront(6);
 	
 	//first.insertFront(6);
 	//first.insertFront(4);
@@ -25,20 +33,25 @@ int main() {
 	
 	
 	
-	std::cout << "first list size after additions: " << first.size() << std::endl;
-	std::cout << "second list size after additions: " << second.size() << std::endl;
-	first.print();
-	std::cout << std::endl;
-	second.print();
-	std::cout << std::endl;
+	//std::cout << "first list size after additions: " << first.size() << std::endl;
+	//std::cout << "second list size after additions: " << second.size() << std::endl;
+	std::cout << "third list size after additions: " << third.size() << std::endl;
+	//first.print();
+	//std::cout << std::endl;
+	//second.print();
+	//std::cout << std::endl;
 
-	first.mergeWith(second);
-	first.print();
-	std::cout << std::endl;
-	second.print();
-	std::cout << std::endl;
+	//first.mergeWith(second);
+	//first.print();
+	//std::cout << std::endl;
+	//second.print();
+	//std::cout << std::endl;
 
-
+	third.print();
+	std::cout << std::endl;
+	third.sort();
+	third.print();
+	std::cout << std::endl;
 
 
 
