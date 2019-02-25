@@ -33,11 +33,14 @@ int main() {
 	
 	
 	
-	//std::cout << "first list size after additions: " << first.size() << std::endl;
+	std::cout << "first list size after additions: " << first.size() << std::endl;
 	//std::cout << "second list size after additions: " << second.size() << std::endl;
-	std::cout << "third list size after additions: " << third.size() << std::endl;
-	//first.print();
-	//std::cout << std::endl;
+	//std::cout << "third list size after additions: " << third.size() << std::endl;
+	first.print();
+	std::cout << std::endl;
+	first.reverse();
+	first.print();
+	std::cout << std::endl;
 	//second.print();
 	//std::cout << std::endl;
 
@@ -47,11 +50,11 @@ int main() {
 	//second.print();
 	//std::cout << std::endl;
 
-	third.print();
-	std::cout << std::endl;
-	third.sort();
-	third.print();
-	std::cout << std::endl;
+	//third.print();
+	//std::cout << std::endl;
+	//third.sort();
+	//third.print();
+	//std::cout << std::endl;
 
 
 

@@ -254,6 +254,10 @@ template <typename T>
 void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
   /// @todo Graded in MP3.2
 
+  if(startPoint==endPoint){
+    return;
+  }
+
   //calcuate how many nodes should be reversed
   ListNode * begin = endPoint;
   ListNode * end = startPoint;
