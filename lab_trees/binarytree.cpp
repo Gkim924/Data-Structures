@@ -5,6 +5,7 @@
  */
 #include "TreeTraversals/InorderTraversal.h"
 #include <iostream>
+#include <algorithm>
 
 /**
  * @return The height of the binary tree. Recall that the height of a binary
@@ -109,13 +110,17 @@ template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
     // your code here
+    InorderTraversal<int> travese(root);
 
+    std::vector<T> lineup;
+    TreeTraversal<int>::Iterator itr = travese.begin();
 
+    while(itr!=travese.end()){
+        lineup.push_back((*itr)->elem);
+        ++itr;
+    }
 
-
-
-    
-    return false;
+    return std::is_sorted(lineup.begin(),lineup.end());;
 }
 
 /**
@@ -128,7 +133,7 @@ template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
     // your code here
-    return false;
+    return true;
 }
 
 
