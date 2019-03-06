@@ -4,6 +4,8 @@
 #pragma once
 
 #include <iterator>
+#include <vector>
+#include <queue>
 #include "../cs225/HSLAPixel.h"
 #include "../cs225/PNG.h"
 #include "../Point.h"
@@ -36,11 +38,26 @@ public:
 
     /** @todo [Part 1] */
     /** add member functions if neccesary*/
-  
+    Iterator(const PNG & png, const Point & start, double tolerance, ImageTraversal * type);
+    bool checkVisited(Point & point);
+    bool checkTolerance(Point & currPt, Point & newPt);
+
+    bool finished_;
+    
   private:
     /** @todo [Part 1] */
     /** add private members here if neccesary*/
+    
+    double tolerance_;
+    Point currPt_;
+    Point startPt_;
+    PNG origImage_;
+    std::vector<bool> visited_;
 
+    ImageTraversal * traversal_;
+
+    
+    
   };  
 
   /**

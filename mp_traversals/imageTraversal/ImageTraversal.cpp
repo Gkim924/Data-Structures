@@ -35,6 +35,25 @@ ImageTraversal::Iterator::Iterator() {
   /** @todo [Part 1] */
 }
 
+//custom ctor
+ImageTraversal::Iterator::Iterator(const PNG & png, const Point & start, double tolerance,ImageTraversal * type) {
+  /** @todo [Part 1] */
+
+    tolerance_ = tolerance;
+    currPt_ = start;
+    startPt_ = start;
+    origImage_ = png;
+    traversal_ = type;
+    finished_ = false;
+    
+    //create vector of true false to represent if the coordinates have been visited
+    for(int i=0;i<(int)(png.height()*png.width());i++){
+      visited_.push_back(false);
+    }
+  
+}
+
+
 /**
  * Iterator increment opreator.
  *
@@ -42,6 +61,66 @@ ImageTraversal::Iterator::Iterator() {
  */
 ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   /** @todo [Part 1] */
+  
+  //Possible next points
+  int x = (int)currPt_.x;
+  int y = (int)currPt_.y;
+
+  if(finished_==true){
+    return *this;
+  }
+
+  //get pixel to the right
+  if(x+1<(int)origImage_.width()){
+    Point pR = Point(currPt_.x+1,currPt_.y);
+      if(!checkVisited(pR) && checkTolerance(currPt_, pR)){
+        traversal_->add(pR);
+    }
+  }
+  
+  //get pixel below
+  if(y+1<(int)origImage_.height()){
+    Point pB = Point(currPt_.x,currPt_.y+1);
+      if(!checkVisited(pB) && checkTolerance(currPt_, pB)){
+        traversal_->add(pB);
+    }
+  }
+  
+  //get pixel to the left
+  if(x-1>=0){
+    Point pL = Point(currPt_.x-1,currPt_.y);
+      if(!checkVisited(pL) && checkTolerance(currPt_, pL)){
+        traversal_->add(pL);
+    }
+  }
+  
+  //get pixel above
+  if(y-1>=0){
+    Point pA = Point(currPt_.x,currPt_.y-1);
+      if(!checkVisited(pA) && checkTolerance(currPt_, pA)){
+        traversal_->add(pA);
+    }
+  }
+  
+  if(traversal_->empty()){
+    finished_ = true;
+    return *this;
+  }
+
+  //update visited vector
+  visited_[currPt_.x + currPt_.y * (int)origImage_.width()] = true;
+  Point temp;
+  while(!traversal_->empty()){
+    temp = traversal_->peek();
+    if(!checkVisited(temp)){
+      currPt_ = traversal_->pop();
+      //std::cout << currPt_.x << " " << currPt_.y << std::endl;
+      break;
+    }
+    traversal_->pop();
+  }
+  //currPt_ = traversal_->pop();
+
   return *this;
 }
 
@@ -52,7 +131,8 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
  */
 Point ImageTraversal::Iterator::operator*() {
   /** @todo [Part 1] */
-  return Point(0, 0);
+
+  return currPt_;
 }
 
 /**
@@ -63,5 +143,32 @@ Point ImageTraversal::Iterator::operator*() {
 bool ImageTraversal::Iterator::operator!=(const ImageTraversal::Iterator &other) {
   /** @todo [Part 1] */
   return false;
+}
+
+
+//helper functions I wrote
+bool ImageTraversal::Iterator::checkVisited(Point & point){
+
+  //x + (y*width)
+  if(visited_[point.x + point.y * (int)origImage_.width()]==true){
+    return true;
+  }
+
+  else return false;
+}
+
+
+bool ImageTraversal::Iterator::checkTolerance(Point & currPt, Point & newPt){
+
+  HSLAPixel curr = origImage_.getPixel(currPt.x, currPt.y); 
+  HSLAPixel next = origImage_.getPixel(newPt.x, newPt.y); 
+
+  double delta = calculateDelta(curr,next);
+
+  if(delta<tolerance_){
+    return true;
+  }
+
+  else return false;
 }
 
