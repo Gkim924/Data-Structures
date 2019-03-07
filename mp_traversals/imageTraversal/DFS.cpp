@@ -29,7 +29,7 @@ DFS::DFS(const PNG & png, const Point & start, double tolerance) {
   tolerance_ = tolerance;
   image_ = png;
 
-  //neighbors_.push(start);
+  neighbors_.push(start);
 
 }
 
@@ -66,6 +66,9 @@ void DFS::add(const Point & point) {
  */
 Point DFS::pop() {
   /** @todo [Part 1] */
+  if(neighbors_.empty()){
+    return Point(0,0);
+  }
   Point next = neighbors_.top();
   neighbors_.pop();
   return next;

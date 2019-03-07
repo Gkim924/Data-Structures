@@ -18,6 +18,7 @@ using namespace cs225;
  */
 FloodFilledImage::FloodFilledImage(const PNG & png) {
   /** @todo [Part 2] */
+	//png_ = new PNG(png);
 }
 
 /**
@@ -29,6 +30,9 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
+	//traversal_ = &traversal;
+	//colorPicker_ = &colorPicker;
+
 }
 
 /**

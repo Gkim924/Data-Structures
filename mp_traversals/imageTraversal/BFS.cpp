@@ -27,6 +27,8 @@ BFS::BFS(const PNG & png, const Point & start, double tolerance) {
   start_ = start;
   tolerance_ = tolerance;
   image_ = png;
+
+  neighbors_.push(start);
 }
 
 /**
@@ -62,6 +64,9 @@ void BFS::add(const Point & point) {
  */
 Point BFS::pop() {
   /** @todo [Part 1] */
+  if(neighbors_.empty()){
+    return Point(0,0);
+  }
   Point next = neighbors_.front();
   neighbors_.pop();
   return next;

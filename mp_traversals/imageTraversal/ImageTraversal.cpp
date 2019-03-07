@@ -113,13 +113,17 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   while(!traversal_->empty()){
     temp = traversal_->peek();
     if(!checkVisited(temp)){
-      currPt_ = traversal_->pop();
-      //std::cout << currPt_.x << " " << currPt_.y << std::endl;
+      currPt_ = traversal_->peek();
+      //currPt_ = traversal_->pop();
       break;
     }
     traversal_->pop();
   }
-  //currPt_ = traversal_->pop();
+
+  if(traversal_->empty()){
+    finished_ = true;
+    return *this;
+  }
 
   return *this;
 }
@@ -142,7 +146,17 @@ Point ImageTraversal::Iterator::operator*() {
  */
 bool ImageTraversal::Iterator::operator!=(const ImageTraversal::Iterator &other) {
   /** @todo [Part 1] */
-  return false;
+
+  // if(this->currPt_==other.currPt_){
+  //   return false;
+  // }
+
+  if(this->finished_==other.finished_){
+    return false;
+  }
+
+  else return true;
+
 }
 
 

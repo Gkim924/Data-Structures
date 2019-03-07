@@ -14,7 +14,33 @@
 
 using namespace cs225;
 
+PNG getTestPNG() {
+  PNG png(4, 4);
+  HSLAPixel blackPixel(180, 1, 0);
+  
+  for (unsigned i = 0; i < 4; i++) {
+    png.getPixel(i, 0) = blackPixel;
+    png.getPixel(0, i) = blackPixel;
+    png.getPixel(i, 3) = blackPixel;
+    png.getPixel(3, i) = blackPixel;
+  }
+    
+  return png;
+}
+
 int main() {
+
+  PNG png = getTestPNG();
+  Point startPoint(1, 1);
+  
+  DFS t(png, startPoint, 0.2);
+  unsigned count = 0;
+  for (const Point & p : t) {
+    std::cout << "for each loop!" << std::endl;
+    count++;
+  }
+
+
 
   // @todo [Part 3]
   // - The code below assumes you have an Animation called `animation`
