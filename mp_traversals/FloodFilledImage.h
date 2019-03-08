@@ -28,8 +28,10 @@ private:
 	/** @todo [Part 2] */
 	/** add private members here*/
 
-	//PNG * baseImage_;
-	//ImageTraversal * traversal_;
-	//ColorPicker * colorPicker_;
+	PNG baseImage_;
+
+	std::vector<ImageTraversal*> traversal_;
+
+	std::vector<ColorPicker*> colorPicker_;
 
 };
