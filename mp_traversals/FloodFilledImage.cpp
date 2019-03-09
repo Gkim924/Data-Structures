@@ -65,17 +65,19 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
   	ImageTraversal::Iterator start = traversal_[i]->begin();
   	ImageTraversal::Iterator end = traversal_[i]->end();
 
-  	for (ImageTraversal::Iterator it=start;it!=end;++it) {
+  	//for (ImageTraversal::Iterator it=start;it!=end;++it) {
+  		for (const Point p : *traversal_[i]) {
+    	
+    	HSLAPixel & curr = baseImage_.getPixel(p.x,p.y);
+    	HSLAPixel chg = colorPicker_[i]->getColor(p.x,p.y);
+    	curr = chg;
+
+    	frameCount++;
     	if(frameCount==frameInterval){
     		//save frame
     		animation.addFrame(baseImage_);
     		frameCount=0;
     	}
-    	HSLAPixel & curr = baseImage_.getPixel((*it).x,(*it).y);
-    	HSLAPixel chg = colorPicker_[i]->getColor((*it).x,(*it).y);
-    	curr = chg;
-
-    	frameCount++;
   	}
   	
 

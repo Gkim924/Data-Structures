@@ -73,7 +73,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   //get pixel to the right
   if(x+1<(int)origImage_.width()){
     Point pR = Point(currPt_.x+1,currPt_.y);
-      if(!checkVisited(pR) && checkTolerance(currPt_, pR)){
+      if(!checkVisited(pR) && checkTolerance(startPt_, pR)){
         traversal_->add(pR);
     }
   }
@@ -81,7 +81,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   //get pixel below
   if(y+1<(int)origImage_.height()){
     Point pB = Point(currPt_.x,currPt_.y+1);
-      if(!checkVisited(pB) && checkTolerance(currPt_, pB)){
+      if(!checkVisited(pB) && checkTolerance(startPt_, pB)){
         traversal_->add(pB);
     }
   }
@@ -89,7 +89,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   //get pixel to the left
   if(x-1>=0){
     Point pL = Point(currPt_.x-1,currPt_.y);
-      if(!checkVisited(pL) && checkTolerance(currPt_, pL)){
+      if(!checkVisited(pL) && checkTolerance(startPt_, pL)){
         traversal_->add(pL);
     }
   }
@@ -97,7 +97,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
   //get pixel above
   if(y-1>=0){
     Point pA = Point(currPt_.x,currPt_.y-1);
-      if(!checkVisited(pA) && checkTolerance(currPt_, pA)){
+      if(!checkVisited(pA) && checkTolerance(startPt_, pA)){
         traversal_->add(pA);
     }
   }
