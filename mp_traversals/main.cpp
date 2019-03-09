@@ -14,44 +14,32 @@
 
 using namespace cs225;
 
-PNG getTestPNG() {
-  PNG png(4, 4);
-  HSLAPixel blackPixel(180, 1, 0);
-  
-  for (unsigned i = 0; i < 4; i++) {
-    png.getPixel(i, 0) = blackPixel;
-    png.getPixel(0, i) = blackPixel;
-    png.getPixel(i, 3) = blackPixel;
-    png.getPixel(3, i) = blackPixel;
-  }
-    
-  return png;
-}
-
 int main() {
-
-  PNG png = getTestPNG();
-  Point startPoint(1, 1);
-  
-  DFS t(png, startPoint, 0.2);
-  unsigned count = 0;
-  for (const Point & p : t) {
-    std::cout << "for each loop!" << std::endl;
-    count++;
-  }
-
-
 
   // @todo [Part 3]
   // - The code below assumes you have an Animation called `animation`
   // - The code provided below produces the `myFloodFill.png` file you must
   //   submit Part 3 of this assignment -- uncomment it when you're ready.
   
-  /*
+  PNG myImg;
+  myImg.readFromFile("tests/i.png");
+
+  FloodFilledImage image(myImg);
+  BFS bfs(myImg, Point(40, 40), 0.5);
+  RainbowColorPicker rainbow(0.5);
+  image.addFloodFill( bfs, rainbow );
+
+  DFS dfs(myImg, Point(40, 40), 0.5);
+  MyColorPicker mine;
+  image.addFloodFill( dfs, mine );
+
+  Animation animation = image.animate(1000);
+
+
   PNG lastFrame = animation.getFrame( animation.frameCount() - 1 );
   lastFrame.writeToFile("myFloodFill.png");
   animation.write("myFloodFill.gif");
-  */
+  
 
 
   return 0;
