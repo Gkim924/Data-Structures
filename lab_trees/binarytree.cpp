@@ -133,6 +133,12 @@ template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
     // your code here
+    InorderTraversal<int> travese(root);
+
+    std::vector<T> lineup;
+    TreeTraversal<int>::Iterator itr = travese.begin();
+
+    
     return true;
 }
 

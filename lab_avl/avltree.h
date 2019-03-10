@@ -10,6 +10,8 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <algorithm>
+#include <utility>
 
 /**
  * The AVLTree class represents a linked-memory AVL Tree.
