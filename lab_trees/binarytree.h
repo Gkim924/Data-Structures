@@ -195,6 +195,9 @@ class BinaryTree
         //Private helper function for mirror
         void mirror(Node* subRoot);
 
+        void _inOrder(Node *subRoot, std::vector<T>& treeVector)const;
+
+        void _getPaths(Node * subRoot, std::vector<std::vector<T>>& paths, std::vector<T> singlePath)const;
 
         /**
          * Private helper function for the sorted public insert function.

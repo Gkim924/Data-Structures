@@ -25,17 +25,31 @@ class InorderTraversal : public TreeTraversal<T> {
     InorderTraversal(typename BinaryTree<T>::Node* root)
 	    : root(root)
     {
-      //stack.push(root);	
-      // your code here
-        typename BinaryTree<T>::Node* curr = root;
-    
-        while(curr!=NULL){
-            stack.push(curr);
-            curr = curr->left;
+        while(root!=NULL){
+            stack.push(root);
+            root = root->left;
         }
-        
-        
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      	// typename BinaryTree<T>::Node* curr = root;
+       //  while(curr!=NULL){
+       //      stack.push(curr);
+       //      curr = curr->left;
+       //  }
+        
     }
 
     /**
@@ -71,22 +85,37 @@ class InorderTraversal : public TreeTraversal<T> {
     void add(typename BinaryTree<T>::Node *& treeNode) {
       // your code here
 
-            if(treeNode->left!=NULL){
-            
+        
+        if(treeNode->right!=NULL){
+            stack.push(treeNode->right);
+            treeNode = treeNode->right;
+            while(treeNode->left!=NULL){
+                stack.push(treeNode->left);
+                treeNode = treeNode->left;
             }
-
-            if(treeNode->right!=NULL){
-
-                typename BinaryTree<T>::Node* curr = treeNode;
-                curr = curr->right;
-    
-                while(curr!=NULL){
-                    stack.push(curr);
-                    curr = curr->left;
-                }
-                        
         }
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // typename BinaryTree<T>::Node* curr = treeNode;
+        // if(curr->right!=NULL){
+        //     curr = curr->right;
+        //         while(curr!=NULL){
+        //             stack.push(curr);
+        //             curr = curr->left;
+        //     }
+        // } 
     }
 
     /**

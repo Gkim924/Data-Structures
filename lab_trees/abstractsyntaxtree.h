@@ -30,6 +30,7 @@ class AbstractSyntaxTree
         double eval() const;
     private:
         // You may add any helper functions you like.....
+        void preOrdered(Node * subRoot,std::stack<std::string>& order)const;
 };
 
 #include "abstractsyntaxtree_given.cpp"
