@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 /**
  * BTree class. Provides interfaces for inserting and finding elements in
@@ -343,8 +344,15 @@ size_t insertion_idx(const std::vector<T>& elements, const C& val)
 {
     /* TODO Your code goes here! */
 
-    return 5;
+    std::vector<T> list(elements);
+
+    typename std::vector<T>::iterator low;
+    low=std::lower_bound (list.begin(), list.end(), val);
+    
+    return (low- list.begin());
 }
+
+
 
 #include "btree_given.cpp"
 #include "btree.cpp"

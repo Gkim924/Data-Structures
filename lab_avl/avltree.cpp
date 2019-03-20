@@ -40,8 +40,9 @@ void AVLTree<K, V>::rotateLeft(Node*& t)
     t->right = y->left;
     y->left = t;
 
+    //updates node that was brought down/left
     t->height = max(heightOrNeg1(t->left),heightOrNeg1(t->right))+1;
-    t = y;
+    t = y; //sets t to be node that was brought up
     t->height = max(heightOrNeg1(t->left),heightOrNeg1(t->right))+1;
     
 }
@@ -60,7 +61,7 @@ void AVLTree<K, V>::rotateRight(Node*& t)
 {
     functionCalls.push_back("rotateRight"); // Stores the rotation name (don't remove this)
     // your code here
-    Node * y = t->left;
+    Node * y = t->left;     //rotate right is mirror of rotate left
     t->left = y->right;
     y->right = t;
 
@@ -84,26 +85,27 @@ void AVLTree<K, V>::rebalance(Node*& subtree)
 {
     // your code here
     int balance = heightOrNeg1(subtree->right) - heightOrNeg1(subtree->left);
-
-    if(balance == -2){
-        int lBalance = heightOrNeg1(subtree->left->right) - heightOrNeg1(subtree->left->left);
-        if(lBalance==-1){
-            rotateRight(subtree);
-        }
-        else {
-            rotateLeftRight(subtree);
-        }
-    }
-    else if(balance == 2){
-        int rBalance = heightOrNeg1(subtree->right->right) - heightOrNeg1(subtree->right->left);
-        if(rBalance==1){
+    if(balance==2){ //possible L or RL rotation 
+        int r_balance = heightOrNeg1(subtree->right->right) - heightOrNeg1(subtree->right->left);
+        if(r_balance==1){
             rotateLeft(subtree);
         }
         else {
             rotateRightLeft(subtree);
         }
     }
-    subtree->height = 1 + max(heightOrNeg1(subtree->left), heightOrNeg1(subtree->right));
+    if(balance==-2){ //possible R or LR rotation 
+        int l_balance = heightOrNeg1(subtree->left->right) - heightOrNeg1(subtree->left->left);
+        if(l_balance==-1){
+            rotateRight(subtree);
+        }
+        else {
+            rotateLeftRight(subtree);
+        }
+    }
+
+    subtree->height = max(heightOrNeg1(subtree->left),heightOrNeg1(subtree->right))+1;
+
 }
 
 template <class K, class V>
@@ -157,13 +159,34 @@ void AVLTree<K, V>::remove(Node*& subtree, const K& key)
             /* two-child remove */
             // your code here
 
+            //find IOP value
+            Node * search = subtree;
+            if(search->left!=NULL){
+                search = search->left;
+                while(search->right!=NULL){
+                    search = search->right;
+                }
+            }
+            //swap node with IOP
+            //std::cout<<"IOP of:"<<subtree->key<<" is:"<<search->key<<std::endl;
+            swap(subtree,search);
+            remove(subtree->left,key);
+
         } else {
             /* one-child remove */
             // your code here
-            Node * temp = subtree;
-            subtree = subtree->right;
-            delete temp;
+            if(subtree->left == NULL && subtree->right != NULL){ //remove left child
+                Node * temp = subtree;
+                subtree = subtree->right;
+                delete temp;
+            }
+            else {
+                Node * temp = subtree;
+                subtree = subtree->left;
+                delete temp;
+            }
         }
         // your code here
+        rebalance(root);
     }
 }
