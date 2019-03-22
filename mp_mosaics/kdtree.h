@@ -14,6 +14,7 @@
 #include <vector>
 #include "util/coloredout.h"
 #include "point.h"
+#include <cmath>
 
 using std::vector;
 using std::string;
