@@ -43,18 +43,17 @@ V BTree<K, V>::find(const BTreeNode* subroot, const K& key) const
      */
 
     
-    if(first_larger_idx<order && subroot->elements.size()!=0){
-        if(subroot->elements[first_larger_idx].key==key){
-            return subroot->elements[first_larger_idx].value;
+    if(!subroot->elements.empty()){
+        if(first_larger_idx<subroot->elements.size()){
+            if(subroot->elements[first_larger_idx].key==key){
+                return subroot->elements[first_larger_idx].value;
+            }
+            if(subroot->is_leaf){
+                return V();
+            }
         }
     }
-    
-    if(!subroot->is_leaf){
-        return find(subroot->children[first_larger_idx],key);
-    }
-
-    //default return
-    else return V();
+    return find(subroot->children[first_larger_idx],key);
 }
 
 /**
@@ -152,16 +151,21 @@ void BTree<K, V>::split_child(BTreeNode* parent, size_t child_idx)
 
 
     /* TODO Your code goes here! */
-    parent->elements.insert(elem_itr,*mid_elem_itr);
+    auto end_elem_itr = child->elements.end();
+    auto end_child_itr = child->children.end();
+
+    DataPair midValue = *mid_elem_itr;
     parent->children.insert(child_itr,new_right);
+    parent->elements.insert(elem_itr,midValue);
 
-    //assign old node (left)
+    new_right->elements.assign(mid_elem_itr+1,end_elem_itr);
     new_left->elements.assign(child->elements.begin(),mid_elem_itr);
-    new_left->children.assign(child->children.begin(),mid_child_itr);
 
-    //assign new node (right)
-    new_right->elements.assign(mid_elem_itr+1,child->elements.end());
-    new_right->children.assign(mid_child_itr,child->children.end());
+    if(!child->is_leaf){
+        new_right->children.assign(mid_child_itr,end_child_itr);
+        new_left->children.assign(child->children.begin(),mid_child_itr);
+        return;
+    }
 }
 
 /**
@@ -186,26 +190,20 @@ void BTree<K, V>::insert(BTreeNode* subroot, const DataPair& pair)
     size_t first_larger_idx = insertion_idx(subroot->elements, pair);
 
     /* TODO Your code goes here! */
-    if(first_larger_idx<order && subroot->elements.size()!=0){
-        if(subroot->elements[first_larger_idx]==pair){
-            return; //value is already present no insert
+    if(!subroot->elements.empty()){
+        if(first_larger_idx<subroot->elements.size()){
+            if(subroot->elements[first_larger_idx].key==pair.key){
+                return;
+            }
         }
     }
-    
-    if(subroot->is_leaf){ //insert at leaf
+    if(subroot->is_leaf){
         subroot->elements.insert(subroot->elements.begin()+first_larger_idx,pair);
-        //split child if needed
-        if(subroot->elements.size()>=order){
-            split_child(subroot,first_larger_idx);
-        }
+        return;
     }
-
-    else { //insert into child
-        insert(subroot->children[first_larger_idx],pair);
-        //split child if needed
-        if(subroot->elements.size()>=order){
-            split_child(subroot,first_larger_idx);
-        }
+    insert(subroot->children[first_larger_idx],pair);
+    if(subroot->children[first_larger_idx]->elements.size()>=order){
+        split_child(subroot,first_larger_idx);
     }
 
 }
