@@ -260,6 +260,20 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+
+    int _quickSelect(vector<Point<Dim>> &points, int left, int right, int mid, int dim);
+
+    int _partition(vector<Point<Dim>> &points, int left, int right, int dim);
+
+    void _copy(KDTreeNode * left, KDTreeNode * right);
+
+    void _destroy(KDTreeNode * subRoot);
+
+    KDTreeNode * _assemble(int left, int right, int dim);
+
+    //vector to keep the points in the tree
+    vector<Point<Dim>> point_vector_;
+
 };
 
 #include "kdtree.hpp"
