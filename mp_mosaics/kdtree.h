@@ -265,6 +265,8 @@ class KDTree
 
     int _partition(vector<Point<Dim>> &points, int left, int right, int dim);
 
+    Point<Dim> _findNearestNeighbor(KDTree<Dim>::KDTreeNode * subRoot, Point<Dim> query,Point<Dim> currBest, int dim) const;
+
     void _copy(KDTreeNode * left, KDTreeNode * right);
 
     void _destroy(KDTreeNode * subRoot);
