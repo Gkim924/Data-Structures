@@ -34,29 +34,41 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
     /**
      * @todo Implement this function!
      */
-
-    double d1=0;
-    double d2=0;
-    for(int i=0;i<Dim;i++){
-      //check distance between target and potential
-      d1 += pow(target[i]-potential[i],2);
-      //std::cout<<target[i]<<" "<<potential[i]<<" "<<currentBest[i]<<std::endl;
-      //check distance between target and currentBest
-      d2 += pow(target[i]-currentBest[i],2);
-    }
+  double pot = 0;
+  double cur = 0;
+  for(auto i=0;i<Dim;i++){
+    pot += pow((potential[i]-target[i]),2);
+    cur += pow((currentBest[i]-target[i]),2);
+  }
+  if(pot<cur){
+    return true;
+  }
+  else if(pot==cur){
+    return potential<currentBest;
+  }
+  return false;
+    // double d1=0;
+    // double d2=0;
+    // for(int i=0;i<Dim;i++){
+    //   //check distance between target and potential
+    //   d1 += pow(target[i]-potential[i],2);
+    //   //std::cout<<target[i]<<" "<<potential[i]<<" "<<currentBest[i]<<std::endl;
+    //   //check distance between target and currentBest
+    //   d2 += pow(target[i]-currentBest[i],2);
+    // }
     
 
-    if(d1<d2){ //potential is closer to target
-      //std::cout<<"something"<<std::endl;
-      //std::cout<<"D1:"<<d1<<std::endl;
-      //std::cout<<"D2:"<<d2<<std::endl;
-      return true;
-    }
-    if(d1==d2){
-      return potential<currentBest;
-    }
+    // if(d1<d2){ //potential is closer to target
+    //   //std::cout<<"something"<<std::endl;
+    //   //std::cout<<"D1:"<<d1<<std::endl;
+    //   //std::cout<<"D2:"<<d2<<std::endl;
+    //   return true;
+    // }
+    // if(d1==d2){
+    //   return potential<currentBest;
+    // }
 
-    return false;
+    // return false;
 }
 
 template <int Dim>
@@ -133,6 +145,10 @@ const KDTree<Dim>& KDTree<Dim>::operator=(const KDTree<Dim>& rhs) {
   /**
    * @todo Implement this function!
    */
+  
+  ~KDTree();
+  _copy(this,*rhs);
+  
 
   return *this;
 }
@@ -203,6 +219,7 @@ Point<Dim> KDTree<Dim>::_findNearestNeighbor(KDTree<Dim>::KDTreeNode * subRoot, 
     currBest = subRoot->point;
   }
 
+  if(Dim<=2){
   if(pow(subRoot->point[dim]-query[dim],2)<=pow(query[dim]-currBest[dim],2)){
      if(smallerDimVal(subRoot->point,query,dim)){ 
         Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
@@ -217,6 +234,23 @@ Point<Dim> KDTree<Dim>::_findNearestNeighbor(KDTree<Dim>::KDTreeNode * subRoot, 
       }
     }
   }
+}
+else{
+  if(shouldReplace(query,subRoot->point,currBest)){
+     if(smallerDimVal(subRoot->point,query,dim)){ 
+        Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
+          if(shouldReplace(query,currBest,temp)){
+            currBest = temp;
+          }
+      }
+      else { 
+        Point<Dim> temp = _findNearestNeighbor(subRoot->right,query,currBest,(dim+1)%Dim);
+          if(shouldReplace(query,currBest,temp)){
+            currBest = temp;
+      }
+    }
+  }
+}
   return currBest;
 
 }
