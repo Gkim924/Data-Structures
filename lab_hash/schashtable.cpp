@@ -54,6 +54,23 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+    
+    if(shouldResize()){
+        resizeTable();
+    }
+
+    //hash current key to find place to put into table
+    size_t index = hashes::hash(key,size);
+
+    //create key value pair
+    std::pair<K,V> pair(key,value);
+
+    //insert k,v pair into a list at index provided by hash
+    table[index].push_front(pair);
+
+    //update number of elements stored in hash table
+    elems++;
+
 }
 
 template <class K, class V>
@@ -66,7 +83,26 @@ void SCHashTable<K, V>::remove(K const& key)
      * Please read the note in the lab spec about list iterators and the
      * erase() function on std::list!
      */
-    (void) key; // prevent warnings... When you implement this function, remove this line.
+
+    //see if key exists
+    if(!keyExists(key)){
+        return;
+    }
+
+    //use hash function to get index into table
+    size_t index = hashes::hash(key,size);
+
+    for(typename std::list< std::pair<K,V> >::iterator it = table[index].begin();it!=table[index].end();++it){
+        if(it->first==key){
+            table[index].erase(it);
+            break;
+        }
+    }
+
+    //update element count
+    elems--;
+
+    //(void) key; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
@@ -77,7 +113,19 @@ V SCHashTable<K, V>::find(K const& key) const
      * @todo: Implement this function.
      */
 
+    //use hash function to get index into table
+    size_t index = hashes::hash(key,size);
+
+    
+    for(typename std::list< std::pair<K,V> >::iterator it = table[index].begin();it!=table[index].end();++it){
+        if(it->first==key){
+            return it->second;
+        }
+    }
+
+    //if key is not present return default value
     return V();
+
 }
 
 template <class K, class V>
@@ -134,4 +182,22 @@ void SCHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
+
+    size_t newSize = findPrime(size*2);
+    std::list<std::pair<K, V>> * newTable = new std::list<std::pair<K,V>>[newSize];
+
+    //go through old hash table and add keys and values to new table
+    for(size_t i=0;i<size;i++){
+        for(it=table[i].begin();it!=table[i].end();++it){
+            std::pair<K,V> pair(it->first,it->second);
+            size_t index = hashes::hash(it->first,newSize);
+            newTable[index].push_front(pair);
+        }
+
+    }
+    
+    size = newSize;
+    delete[] table;
+    table = newTable;
+
 }
