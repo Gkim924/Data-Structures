@@ -54,6 +54,9 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+
+    //update number of elements stored in hash table
+    elems++;
     
     if(shouldResize()){
         resizeTable();
@@ -68,8 +71,7 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
     //insert k,v pair into a list at index provided by hash
     table[index].push_front(pair);
 
-    //update number of elements stored in hash table
-    elems++;
+    
 
 }
 
@@ -92,7 +94,7 @@ void SCHashTable<K, V>::remove(K const& key)
     //use hash function to get index into table
     size_t index = hashes::hash(key,size);
 
-    for(typename std::list< std::pair<K,V> >::iterator it = table[index].begin();it!=table[index].end();++it){
+    for(it = table[index].begin();it!=table[index].end();++it){
         if(it->first==key){
             table[index].erase(it);
             break;

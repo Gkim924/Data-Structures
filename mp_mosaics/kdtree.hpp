@@ -201,14 +201,14 @@ Point<Dim> KDTree<Dim>::_findNearestNeighbor(KDTree<Dim>::KDTreeNode * subRoot, 
   }
 
 
-  if(smallerDimVal(subRoot->point,query,dim)){ //go right
+  if(smallerDimVal(subRoot->point,query,dim) && subRoot->right){ //go right
     Point<Dim> temp = _findNearestNeighbor(subRoot->right,query,currBest,(dim+1)%Dim);
     if(shouldReplace(query,currBest,temp)){
       currBest = temp;
     }
   }
 
-  else { //go left
+  else if(subRoot->left) { //go left
     Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
     if(shouldReplace(query,currBest,temp)){
       currBest = temp;
@@ -219,38 +219,29 @@ Point<Dim> KDTree<Dim>::_findNearestNeighbor(KDTree<Dim>::KDTreeNode * subRoot, 
     currBest = subRoot->point;
   }
 
-  if(Dim<=2){
-  if(pow(subRoot->point[dim]-query[dim],2)<=pow(query[dim]-currBest[dim],2)){
-     if(smallerDimVal(subRoot->point,query,dim)){ 
-        Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
-          if(shouldReplace(query,currBest,temp)){
-            currBest = temp;
-          }
+  //find dimentional dist between query and current point
+  double dim_dist = std::pow((query[dim] - subRoot->point[dim]),2);
+
+  double cur = 0;
+  for(int i=0;i<Dim;i++){
+    cur += pow((currBest[i]-query[i]),2);
+  }
+
+  if(dim_dist<=cur){
+    if(smallerDimVal(subRoot->point,query,dim) && subRoot->left){
+      Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
+      if(shouldReplace(query,currBest,temp)){
+      currBest = temp;
       }
-      else { 
-        Point<Dim> temp = _findNearestNeighbor(subRoot->right,query,currBest,(dim+1)%Dim);
-          if(shouldReplace(query,currBest,temp)){
-            currBest = temp;
+    }
+    else if(!smallerDimVal(subRoot->point,query,dim) && subRoot->right){
+      Point<Dim> temp = _findNearestNeighbor(subRoot->right,query,currBest,(dim+1)%Dim);
+      if(shouldReplace(query,currBest,temp)){
+      currBest = temp;
       }
     }
   }
-}
-else{
-  if(shouldReplace(query,subRoot->point,currBest)){
-     if(smallerDimVal(subRoot->point,query,dim)){ 
-        Point<Dim> temp = _findNearestNeighbor(subRoot->left,query,currBest,(dim+1)%Dim);
-          if(shouldReplace(query,currBest,temp)){
-            currBest = temp;
-          }
-      }
-      else { 
-        Point<Dim> temp = _findNearestNeighbor(subRoot->right,query,currBest,(dim+1)%Dim);
-          if(shouldReplace(query,currBest,temp)){
-            currBest = temp;
-      }
-    }
-  }
-}
+
   return currBest;
 
 }
