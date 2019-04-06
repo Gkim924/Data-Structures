@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -21,5 +22,5 @@ private:
 
 	vector<int> table_;
 
-}
+};
 

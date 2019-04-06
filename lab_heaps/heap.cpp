@@ -4,6 +4,7 @@
  * Implementation of a heap class.
  */
 
+
 template <class T, class Compare>
 size_t heap<T, Compare>::root() const
 {

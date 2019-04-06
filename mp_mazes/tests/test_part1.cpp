@@ -17,6 +17,7 @@ TEST_CASE("addElements1", "[weight=10][part1]")
 {
 	DisjointSets disjSets;
 	disjSets.addelements(5);
+	//cout << "after add" <<endl;
 	REQUIRE(3 == disjSets.find(3));
 }
 
