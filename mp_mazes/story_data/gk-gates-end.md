@@ -1,0 +1,1 @@
+Bill Gates arrives just in time to get to the Yacht Club and secure Steve Jobs Yacht, the location for the next Money Fight Club. 

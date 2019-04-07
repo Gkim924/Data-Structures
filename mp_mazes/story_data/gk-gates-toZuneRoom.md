@@ -1,0 +1,1 @@
+After entering the necesscary biometric data and jiggling the doorknob Bill enters the Hall of Zunes.

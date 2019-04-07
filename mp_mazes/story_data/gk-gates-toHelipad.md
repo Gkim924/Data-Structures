@@ -1,0 +1,1 @@
+Bill rides his segway to the helipad.
