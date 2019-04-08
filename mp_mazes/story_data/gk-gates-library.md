@@ -4,7 +4,7 @@ Success, a large pile of cash laying on the floor. Bill asks the smart house to 
 Check in another place.
 
 # gk-gates-toEnd
-Grab this cash, call and UBER, and wing it. 
+Grab this cash, call an UBER, and wing it. 
 
 # gk-gates-toHelipad
 UBER has surge pricing, take the helicopter.
