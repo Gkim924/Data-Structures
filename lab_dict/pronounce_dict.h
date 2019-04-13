@@ -54,4 +54,5 @@ class PronounceDict
 
   private:
     std::map<std::string, std::vector<std::string>> dict;
+
 };
