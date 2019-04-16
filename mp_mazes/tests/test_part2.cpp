@@ -215,6 +215,39 @@ TEST_CASE("testSolveMazeValidPath", "[weight=10][part2]")
 	copyMaze(soln, &maze);
 	vector<int> solution = maze.solveMaze();
 
+	//draw maze
+	//cs225::PNG* tEst = maze.drawMaze();
+    //tEst->writeToFile("TESTCASEunsolved.png");
+
+    //cs225::PNG* tEst1 = maze.drawMazeWithSolution();
+    //tEst1->writeToFile("TESTCASEsolved.png");
+
+    //check pixel detection
+    // int count = 0;
+    // for(int y=0;y<15;y++){
+    // 	for(int x=0;x<15;x++){
+    		
+    // 		if(tEst->getPixel(x*10 + 10, y*10 +5).l ==0){
+    // 			std::cout << "Index:" <<count << std::endl;
+    // 			std::cout<<"X:"<<x<<" Y:"<<y<<" RIGHTWALL"<<std::endl;
+
+    // 		}
+    // 		if(tEst->getPixel(x*10 + 5, y*10 +10).l ==0){
+    // 			std::cout << "Index:" <<count << std::endl;
+    // 			std::cout<<"X:"<<x<<" Y:"<<y<<" DOWNWALL"<<std::endl;
+    // 		}
+    // 		count++;
+    // 	}
+    // }
+
+	//print out soln vector
+	// std::cout << "Printing soln vector" << std::endl;
+	// for(int x : solution){
+	// 	std::cout << x << " " ;
+	// }
+	// std::cout << std::endl;
+	//
+
 	if (solution.empty())
 		FAIL("No solution was generated");
 
@@ -223,7 +256,11 @@ TEST_CASE("testSolveMazeValidPath", "[weight=10][part2]")
 	for (size_t i = 0; i < solution.size(); i++)
 	{
 		if (soln.isWallInDir(x, y, solution[i])) {
-			std::cout << x << "    " << y << "    " << solution[i] <<std::endl;
+
+			//
+			//std::cout << "X:" << x << " Y:" << y << " Sol[" << i << "]:" << solution[i] <<std::endl;
+
+
 			FAIL("Solution passes through walls");
 		}
 		advancePosition(&x, &y, solution[i]);

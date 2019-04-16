@@ -7,6 +7,11 @@
 
 using namespace cs225;
 using namespace std;
+
+SquareMaze::SquareMaze(){
+
+};
+
 void SquareMaze::makeMaze(int width, int height){
   this->width = width;
   this->height = height;
@@ -63,19 +68,21 @@ bool SquareMaze::canTravel(int x, int y, int dir) const{
     if(x == 0) return false;
     if(rightWalls[(x-1)+y*width]) return false;
   }
-  if(dir == 3){ //right
+  if(dir == 3){ //up
     if(y == 0) return false;
     if(downWalls[x+(y-1)*width]) return false;
   }
   return true;
 }
 void SquareMaze::setWall(int x, int y, int dir, bool exists){
+
   if(dir == 0){ //right
     if(exists){
       rightWalls[x+y*width] = true;
     }else {
       rightWalls[x+y*width] = false;
     }
+	}
     if(dir == 1){ //down
       if(exists){
         downWalls[x+y*width] = true;
@@ -83,75 +90,83 @@ void SquareMaze::setWall(int x, int y, int dir, bool exists){
         downWalls[x+y*width] = false;
       }
     }
+
+
 }
-}
+
+//solve maze using DisjointSets method in stack.
 std::vector<int> SquareMaze::solveMaze(){
-  vector<int> lastRows;
 
-    map<int, int> steps;
-    vector<bool> visited;
-    for(int i = 0; i < width*height; i++) visited.push_back(false);
-
-    queue<int> q;
-    q.push(0);
-    visited[0] = true;
-
-    while(!q.empty()) {
-      int v = q.front();
-      q.pop();
-      int x = v % width;
-      int y = v / width;
-      if (y == height - 1) {
-        lastRows.push_back(v);
-        // if (lastRows.size() == (unsigned) width) break;
-      }
-
-      if (canTravel(x, y, 0) && !visited[v + 1]) {
-        steps[v + 1] = v;
-        visited[v + 1] = true;
-        q.push(v + 1);
-      }
-      if (canTravel(x, y, 1) && !visited[v + width]) {
-        steps[v + width] = v;
-        visited[v + width] = true;
-        q.push(v + width);
-      }
-      if (canTravel(x, y, 2) && !visited[v - 1]) {
-        steps[v - 1] = v;
-        visited[v - 1] = true;
-        q.push(v - 1);
-      }
-      if (canTravel(x, y, 3) && !visited[v - width]) {
-        steps[v - width] = v;
-        visited[v - width] = true;
-        q.push(v - width);
-      }
-    }
-
-    vector<int> dirs;
-    int i;
-    for(i = lastRows.size() -1 ; i > 0; i-- ) {
-    	if(lastRows[i] != lastRows[i-1]) {
-    		break;
-    	}
-    }
-
-    int start = lastRows[i];
-
-// cout<<"last"<<last<<endl;
-    while (start != 0) {
-      int former = steps[start];
-// cout<<former<<endl;
-      if (start == former + 1) dirs.push_back(0);
-      else if (start == former - 1) dirs.push_back(2);
-      else if (start == former + width) dirs.push_back(1);
-      else if (start == former - width) dirs.push_back(3);
-      start = former;
-    }
-    std::reverse(dirs.begin(),dirs.end());
-// cout<<"size: "<<dirs.size()<<endl;
-    return dirs;
+std::stack<int> nodes;    //contains the nodes that form paths
+std::stack<int> index;    //contains the nodes from prev node.
+std::vector<int> visited;
+std::queue<int> traverse;   //a queue that contains the current node's neighbors.
+for(int i = 0; i < width*height; i++){
+visited.push_back(false);
 }
+traverse.push(0);
+index.push(-1);
+while(!traverse.empty()){
+nodes.push(traverse.front());
+
+int curr = traverse.front();
+
+int x = curr%width;
+int y = curr/width;
+traverse.pop();
+visited[curr] = true;
+if(canTravel(x,y,0) && !visited[curr+1]){
+  traverse.push(curr+1);
+  index.push(curr);
+}
+if(canTravel(x,y,1) && !visited[curr+width]){
+  traverse.push(curr+width);
+  index.push(curr);
+}
+if(canTravel(x,y,2) && !visited[curr-1]){
+  traverse.push(curr-1);
+  index.push(curr);
+}
+if(canTravel(x,y,3) && !visited[curr-width]){
+  traverse.push(curr-width);
+  index.push(curr);
+}
+}
+while (nodes.top()/width != height-1) {    //pop all the nodes from stack until the top of the stack is the in the last row,
+  nodes.pop();                             //which should be the furthest from the origin.
+}
+while(index.size() != nodes.size()){      //pop all the unnecessary index until index and nodes are the same size.
+  index.pop();
+}
+std::vector<int> direction;    //contains the vector of directions.
+while(nodes.top() != 0){
+int currNode = nodes.top();
+int currIndex = index.top();
+
+if(currIndex+1 == currNode){
+  direction.push_back(0);
+}
+if(currIndex+width == currNode){
+  direction.push_back(1);
+}
+if(currIndex-1 == currNode){
+  direction.push_back(2);
+}
+if(currIndex-width == currNode){
+  direction.push_back(3);
+}
+while (nodes.top() != currIndex) {
+  nodes.pop();
+  index.pop();
+}
+}
+
+reverse(direction.begin(),direction.end());   //reverse the vector of direction.
+
+return direction;
+
+}
+
 
 cs225::PNG* SquareMaze::drawMaze() const{
 
@@ -195,47 +210,51 @@ cs225::PNG* SquareMaze::drawMazeWithSolution(){
   int yMaze = 0;
     for(size_t i = 0; i < solution.size(); i++){
     if(solution[i] == 0){
-      for(int k = 0; k<10; k++){
-        HSLAPixel &p = unsolved->getPixel(x,y);
+      for(int k = 0; k<=10; k++){
+        HSLAPixel &p = unsolved->getPixel(x+k,y);
         p.h = 0;
         p.s = 1;
         p.l = 0.5;
         p.a = 1;
-        x++;
+        //x++;
       }
+      x += 10;
       xMaze++;
     }
     if(solution[i] == 1){
-      for(int k = 0; k<10; k++){
-        HSLAPixel &p = unsolved->getPixel(x,y);
+      for(int k = 0; k<=10; k++){
+        HSLAPixel &p = unsolved->getPixel(x,y+k);
         p.h = 0;
         p.s = 1;
         p.l = 0.5;
         p.a = 1;
-        y++;
+        //y++;
       }
+      y += 10;
       yMaze++;
     }
     if(solution[i] == 2){
-    for(int k = 0; k<10; k++){
-      HSLAPixel &p = unsolved->getPixel(x,y);
+    for(int k = 0; k<=10; k++){
+      HSLAPixel &p = unsolved->getPixel(x-k,y);
       p.h = 0;
       p.s = 1;
       p.l = 0.5;
       p.a = 1;
-      x--;
+      //x--;
     }
+    x -= 10;
     xMaze--;
     }
     if(solution[i] == 3){
-      for(int k = 0; k<10; k++){
-        HSLAPixel &p = unsolved->getPixel(x,y);
+      for(int k = 0; k<=10; k++){
+        HSLAPixel &p = unsolved->getPixel(x,y-k);
         p.h = 0;
         p.s = 1;
         p.l = 0.5;
         p.a = 1;
-        y--;
+        //y--;
       }
+      y-=10;
       yMaze--;
     }
   }

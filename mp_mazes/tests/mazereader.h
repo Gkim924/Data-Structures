@@ -47,7 +47,18 @@ class MazeReader
 
 	public:
 	MazeReader(const PNG & image);
-	bool isWall(int x, int y, wall_t wall) const { return (walls[y*height + x] & wall) != 0; }
+	bool isWall(int x, int y, wall_t wall) const { 
+
+		//std::cout<<"X:"<<x<<" Y:"<<y<<std::endl;
+		//std::cout<<"REACH"<<std::endl;
+		//std::cout<<"Walls["<< (y*height + x) <<"]:"<<walls[y*height + x]<<std::endl;
+		//std::cout<<"Res:"<< temp <<std::endl;
+		//if((walls[y*height + x] & wall) != 0){
+		//	std::cout<<"FALSE"<<std::endl;
+		//}
+
+		return (walls[y*height + x] & wall) != 0; }
+
 	bool isWallInDir(int x, int y, int dir) const;
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }

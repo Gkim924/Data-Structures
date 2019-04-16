@@ -10,15 +10,20 @@ int main()
     // Write your own main here
     cout << "Add your own tests here! Modify main.cpp" << endl;
 
-    std::vector<int> data;
-    for(int i=0;i<5;i++){
-    	data.push_back(i);
-    }
+    SquareMaze maze;
+    maze.makeMaze(10,10);
+    vector<int> path = maze.solveMaze();
 
-    for(int x : data){
-    	cout<<x<<" ";
-    }
+    // for(int x : path){
+    //     std::cout<<x<<" ";
+    // }
+    // std::cout<<std::endl;
 
+    cs225::PNG* unsolved = maze.drawMaze();
+    unsolved->writeToFile("TEST.png");
+
+    cs225::PNG* solved = maze.drawMazeWithSolution();
+    solved->writeToFile("TESTSOL.png");
 
 
 
