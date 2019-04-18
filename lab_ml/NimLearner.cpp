@@ -26,6 +26,75 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
+
+    //create the vertices 
+    for(int i=startingTokens;i>-1;i--){
+      string temp = std::to_string(i);
+      
+      //p1 vertices
+      g_.insertVertex("p1-"+temp);
+      //p2 vertices
+      g_.insertVertex("p2-"+temp);
+
+    }
+
+    //connect the edges
+    std::vector<Vertex> p1_vertices(g_.getVertices());
+    std::vector<Vertex> p2_vertices;
+
+    for(Vertex t : p1_vertices){
+      if(!t.find("p2")){
+        //std::cout<<"reach"<<std::endl;
+        //std::cout<<t<<std::endl;
+        p2_vertices.push_back(t);
+        g_.removeVertex(t);
+      }
+    }
+
+    p1_vertices.clear();
+    p1_vertices = g_.getVertices();
+
+    //std::cout<<p1_vertices.size()<<std::endl;
+    //std::cout<<p2_vertices.size()<<std::endl;
+
+    for(Vertex v1 : p1_vertices){
+
+      string temp = v1.substr(v1.find("-") + 1); 
+      int move_1 = std::stoi(temp)-1;
+      int move_2 = std::stoi(temp)-2;
+      string edge_1 = "p2-"+std::to_string(move_1);
+      string edge_2 = "p2-"+std::to_string(move_2);
+
+      
+        if(!g_.edgeExists(v1,edge_1) && move_1>-1){
+          g_.insertEdge(v1,edge_1);
+        }
+
+        if(!g_.edgeExists(v1,edge_2) && move_2>-1){
+          g_.insertEdge(v1,edge_2);
+        }
+    }
+
+    for(Vertex v2 : p2_vertices){
+
+      string temp = v2.substr(v2.find("-") + 1); 
+      int move_1 = std::stoi(temp)-1;
+      int move_2 = std::stoi(temp)-2;
+      string edge_1 = "p1-"+std::to_string(move_1);
+      string edge_2 = "p1-"+std::to_string(move_2);
+
+      
+        if(!g_.edgeExists(v2,edge_1) && move_1>-1){
+          g_.insertEdge(v2,edge_1);
+        }
+
+        if(!g_.edgeExists(v2,edge_2) && move_2>-1){
+          g_.insertEdge(v2,edge_2);
+        }
+    }
+
+  
+
 }
 
 /**
