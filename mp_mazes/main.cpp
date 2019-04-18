@@ -11,19 +11,14 @@ int main()
     cout << "Add your own tests here! Modify main.cpp" << endl;
 
     SquareMaze maze;
-    maze.makeMaze(10,10);
-    vector<int> path = maze.solveMaze();
+    maze.makeMaze(50,50);
+    
 
-    // for(int x : path){
-    //     std::cout<<x<<" ";
-    // }
-    // std::cout<<std::endl;
+    cs225::PNG* unsolved = maze.drawCreativeMaze();
+    unsolved->writeToFile("creative.png");
 
-    cs225::PNG* unsolved = maze.drawMaze();
-    unsolved->writeToFile("TEST.png");
-
-    cs225::PNG* solved = maze.drawMazeWithSolution();
-    solved->writeToFile("TESTSOL.png");
+    // cs225::PNG* solved = maze.drawMazeWithSolution();
+    // solved->writeToFile("TESTSOL.png");
 
 
 

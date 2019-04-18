@@ -17,6 +17,7 @@ public:
   std::vector<int> solveMaze();
   cs225::PNG* drawMaze() const;
   cs225::PNG* drawMazeWithSolution();
+  cs225::PNG* drawCreativeMaze() const;
 
 private:
   int width;

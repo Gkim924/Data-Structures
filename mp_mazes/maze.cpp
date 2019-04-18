@@ -266,3 +266,80 @@ cs225::PNG* SquareMaze::drawMazeWithSolution(){
       return unsolved;
 }
 
+cs225::PNG* SquareMaze::drawCreativeMaze() const{
+
+  cs225::PNG* unsolved = new cs225::PNG(width*10+1,height*10+1);
+
+  // for(int i = 0; i < height*10+1; i++){
+  //   HSLAPixel &p = unsolved->getPixel(0,i);
+  //   p.l = 0;
+  // }
+  // for(int i = 0; i < width*10+1; i++){
+  //   HSLAPixel &p = unsolved->getPixel(i,0);
+  //   if(i == 0 || i > 9){
+  //     p.l = 0;
+  //   }
+  // }
+
+  cs225::PNG* input = new cs225::PNG(width*10+1,height*10+1);;
+  input->readFromFile("cpplogo.png");
+
+
+  for(int x = 0; x < width; x++){
+    for(int y = 0 ; y < height; y++){
+      if(rightWalls[x+y*width]){
+        for(int k = 0; k <= 10; k++){
+        HSLAPixel &p = unsolved->getPixel((x+1)*10,y*10+k);
+        p.l = 0;
+      }
+    }
+    if(downWalls[x+y*width]){
+      for(int k = 0; k <= 10; k++){
+      HSLAPixel &p = unsolved->getPixel(x*10+k,(y+1)*10);
+      p.l = 0;
+    }
+  }
+
+  }
+}
+
+for(int x = 0; x < width -2; x++){
+    for(int y = 0 ; y < height -2 ; y++){
+      if(rightWalls[x+y*width]){
+      	HSLAPixel &i = input->getPixel((x+1)*10,y*10);
+      	if(i.l <.75){
+      		for(int k = 0; k <= 10; k++){
+        HSLAPixel &p = unsolved->getPixel((x+1)*10,y*10+k);
+        p.l = 1;
+      }
+        	
+        }
+        
+    }
+    if(downWalls[x+y*width]){
+      
+      HSLAPixel &i = input->getPixel(x*10,(y+1)*10);
+      if(i.l <0.75){
+      	for(int k = 0; k <= 10; k++){
+      		 HSLAPixel &p = unsolved->getPixel(x*10+k,(y+1)*10);
+      	p.l = 1;
+      }
+
+     
+      
+      
+    }
+  }
+
+  }
+}
+
+
+
+
+
+
+return unsolved;
+
+}
+
