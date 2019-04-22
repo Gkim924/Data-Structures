@@ -71,6 +71,12 @@ TEST_CASE("NimLearner(1) plays a trivial random game", "[weight=1][part=2]") {
 TEST_CASE("NimLearner(10) plays random game", "[weight=1][part=2]") {
   NimLearner nim(10);
 
+  // // Print textual output of the graph:
+  // nim.getGraph().print();
+
+  // // Save an graph PNG:
+  // nim.getGraph().savePNG("check");
+
   std::vector<Edge> path = nim.playRandomGame();
   REQUIRE( path.size() >= 5 );
   REQUIRE( path.size() <= 10 );

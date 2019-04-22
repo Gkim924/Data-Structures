@@ -5,6 +5,7 @@
 
 #include "NimLearner.h"
 #include <ctime>
+#include <boost/lexical_cast.hpp>// for lexical_cast()
 
 
 /**
@@ -26,76 +27,36 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
-
-    //create the vertices 
-    for(int i=startingTokens;i>-1;i--){
-      string temp = std::to_string(i);
-      
-      //p1 vertices
-      g_.insertVertex("p1-"+temp);
-      //p2 vertices
-      g_.insertVertex("p2-"+temp);
-
-    }
-
-    //connect the edges
-    std::vector<Vertex> p1_vertices(g_.getVertices());
-    std::vector<Vertex> p2_vertices;
-
-    for(Vertex t : p1_vertices){
-      if(!t.find("p2")){
-        //std::cout<<"reach"<<std::endl;
-        //std::cout<<t<<std::endl;
-        p2_vertices.push_back(t);
-        g_.removeVertex(t);
-      }
-    }
-
-    p1_vertices.clear();
-    p1_vertices = g_.getVertices();
-
-    //std::cout<<p1_vertices.size()<<std::endl;
-    //std::cout<<p2_vertices.size()<<std::endl;
-
-    for(Vertex v1 : p1_vertices){
-
-      string temp = v1.substr(v1.find("-") + 1); 
-      int move_1 = std::stoi(temp)-1;
-      int move_2 = std::stoi(temp)-2;
-      string edge_1 = "p2-"+std::to_string(move_1);
-      string edge_2 = "p2-"+std::to_string(move_2);
-
-      
-        if(!g_.edgeExists(v1,edge_1) && move_1>-1){
-          g_.insertEdge(v1,edge_1);
-        }
-
-        if(!g_.edgeExists(v1,edge_2) && move_2>-1){
-          g_.insertEdge(v1,edge_2);
-        }
-    }
-
-    for(Vertex v2 : p2_vertices){
-
-      string temp = v2.substr(v2.find("-") + 1); 
-      int move_1 = std::stoi(temp)-1;
-      int move_2 = std::stoi(temp)-2;
-      string edge_1 = "p1-"+std::to_string(move_1);
-      string edge_2 = "p1-"+std::to_string(move_2);
-
-      
-        if(!g_.edgeExists(v2,edge_1) && move_1>-1){
-          g_.insertEdge(v2,edge_1);
-        }
-
-        if(!g_.edgeExists(v2,edge_2) && move_2>-1){
-          g_.insertEdge(v2,edge_2);
-        }
-    }
-
-  
-
+    for(int i = startingTokens; i >= 0; i--){
+    g_.insertVertex("p1-"+to_string(i));
+    g_.insertVertex("p2-"+to_string(i));
 }
+  this->startingVertex_ = "p1-"+to_string(startingTokens);
+  for(int i = startingTokens; i >= 2; i--){
+      g_.insertEdge("p1-"+to_string(i),"p2-"+to_string(i-1));
+      g_.setEdgeWeight("p1-"+to_string(i),"p2-"+to_string(i-1),0);
+      g_.setEdgeLabel("p1-"+to_string(i),"p2-"+to_string(i-1),"p1-"+to_string(i)+"T"+"p2-"+to_string(i-1));
+
+      g_.insertEdge("p2-"+to_string(i),"p1-"+to_string(i-1));
+      g_.setEdgeWeight("p2-"+to_string(i),"p1-"+to_string(i-1),0);
+      g_.setEdgeLabel("p2-"+to_string(i),"p1-"+to_string(i-1),"p2-"+to_string(i)+"T"+"p1-"+to_string(i-1));
+
+      g_.insertEdge("p1-"+to_string(i),"p2-"+to_string(i-2));
+      g_.setEdgeWeight("p1-"+to_string(i),"p2-"+to_string(i-2),0);
+      g_.setEdgeLabel("p1-"+to_string(i),"p2-"+to_string(i-2),"p1-"+to_string(i)+"T"+"p2-"+to_string(i-2));
+
+      g_.insertEdge("p2-"+to_string(i),"p1-"+to_string(i-2));
+      g_.setEdgeWeight("p2-"+to_string(i),"p1-"+to_string(i-2),0);
+      g_.setEdgeLabel("p2-"+to_string(i),"p1-"+to_string(i-2),"p2-"+to_string(i)+"T"+"p1-"+to_string(i-2));
+    }
+    g_.insertEdge("p1-1","p2-0");
+    g_.setEdgeWeight("p1-1","p2-0",0);
+    g_.insertEdge("p2-1","p1-0");
+    g_.setEdgeWeight("p2-1","p1-0",0);
+      g_.setEdgeLabel("p1-1","p2-0","p1-1Tp2-0");
+      g_.setEdgeLabel("p2-1","p1-0","p2-1Tp1-0");
+  }
+
 
 /**
  * Plays a random game of Nim, returning the path through the state graph
@@ -109,6 +70,62 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
 std::vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
  /* Your code goes here! */
+ int randomStep = rand()%2 + 1;
+ std::string str="";
+ for(size_t i = 3; i < startingVertex_.length(); i++){
+   str += startingVertex_[i];
+ }
+ int startingTokens = boost::lexical_cast<int>(str);
+ if(startingTokens == 1){
+   path.push_back(g_.getEdge("p1-1","p2-0"));
+   return path;
+ }
+ startingTokens -= randomStep;
+ path.push_back(g_.getEdge(startingVertex_,"p2-"+to_string(startingTokens)));
+ if(startingTokens == 0){
+   return path;
+ }
+  bool checkLastPlayer = false;
+
+ while(startingTokens > 2){
+   checkLastPlayer = false;
+   randomStep = rand()%2 + 1;
+   path.push_back(g_.getEdge("p2-"+to_string(startingTokens),"p1-"+to_string(startingTokens-randomStep)));
+   startingTokens -= randomStep;
+   if(startingTokens == 1 || startingTokens == 2){
+     checkLastPlayer = true;
+     break;
+   }
+   randomStep = rand()%2 + 1;
+   path.push_back(g_.getEdge("p1-"+to_string(startingTokens),"p2-"+to_string(startingTokens-randomStep)));
+   startingTokens -= randomStep;
+ }
+
+ if(startingTokens == 1){
+ if(checkLastPlayer){
+    path.push_back(g_.getEdge("p1-1","p2-0"));
+  } else {
+    path.push_back(g_.getEdge("p2-1","p1-0"));
+  }
+} else {
+  randomStep = rand()%2+1;
+  if(randomStep == 2){
+    if(checkLastPlayer){
+       path.push_back(g_.getEdge("p1-2","p2-0"));
+     } else {
+       path.push_back(g_.getEdge("p2-2","p1-0"));
+     }
+  } else {
+    if(checkLastPlayer){
+      path.push_back(g_.getEdge("p1-2","p2-1"));
+      path.push_back(g_.getEdge("p2-1","p1-0"));
+    } else {
+      path.push_back(g_.getEdge("p2-2","p1-1"));
+      path.push_back(g_.getEdge("p1-1","p2-0"));
+    }
+  }
+}
+
   return path;
 }
 
@@ -130,6 +147,49 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
  /* Your code goes here! */
+ std::string LastPath = path[path.size()-1].getLabel();
+ std::string oneBeforelastplayer = "";
+ oneBeforelastplayer += LastPath[0];
+ oneBeforelastplayer +=LastPath[1];
+for(size_t i = 0; i < path.size(); i++){
+  std::string curr = path[i].getLabel();
+
+  std::string first = "";
+  std::string second ="";
+  std::string firstPlayer = "";
+  firstPlayer += curr[0];
+  firstPlayer += curr[1];
+
+
+  size_t index = curr.find("T");
+  size_t j;
+
+  for(j = 0; j<index; j++){
+    first += curr[j];
+    }
+    std::string secondPlayer="";
+    secondPlayer += curr[j+1];
+    secondPlayer += curr[j+2];
+  for(j = j+1 ; j<curr.size(); j++){
+    second += curr[j];
+  }
+  int currWeight = path[i].getWeight();
+
+  if(oneBeforelastplayer == "p1"){      //p1 is the last;
+    if(firstPlayer=="p1"){
+      g_.setEdgeWeight(first,second,currWeight+1);
+    }else{
+      g_.setEdgeWeight(first,second,currWeight-1);
+    }
+  } else {                                 //p2 is the last;
+    if(firstPlayer=="p2"){
+      g_.setEdgeWeight(first,second,currWeight+1);
+    } else{
+      g_.setEdgeWeight(first,second,currWeight-1);
+    }
+}
+}
+
 }
 
 /**
