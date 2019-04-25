@@ -58,6 +58,20 @@ TEST_CASE("Graphs with `DirectedEdge`s have directed edges", "[weight=1]") {
   g.insertVertex("a");
   g.insertVertex("b");
   g.insertEdge("a", "b");
+
+
+  /////////////////////
+
+
+
+  //std::cout<<"num vertices:"<<g.numVertices()<<std::endl;
+  //std::cout<<"degree"<<g.degree(v)<<std::endl;
+
+
+
+  /////////////////////
+
+
   
   REQUIRE( g.incidentEdges("a").front().get().directed() == true );
 }
@@ -70,6 +84,28 @@ TEST_CASE("Directed: eight-vertex test graph has correct properties", "[weight=1
 
 TEST_CASE("Directed: Graph::degree is correct", "[weight=1]") {
   Graph<Vertex, DirectedEdge> g = createTestDiGraph();
+
+  ///////////////////////
+
+  // std::cout<<"Vert:"<<g.numVertices()<<std::endl;
+  // std::cout<<"Edges:"<<g.numEdges()<<std::endl;
+  // std::cout<<"Deg a:"<<g.degree("a")<<std::endl;
+  // std::cout<<"Deg c:"<<g.degree("c")<<std::endl;
+  // std::cout<<"Deg g:"<<g.degree("g")<<std::endl;
+  // std::cout<<"Deg f:"<<g.degree("f")<<std::endl;
+
+  // std::list<std::reference_wrapper<DirectedEdge>> a_edge = g.incidentEdges("a");
+  // for(std::reference_wrapper<DirectedEdge> e : a_edge){
+  //   std::cout<<"REACH"<<std::endl;
+  //   std::cout<<"Source:"<<e.source.key()<<std::endl;
+  //   std::cout<<"Dest:"<<e.dest.key()<<std::endl;
+  // }
+
+
+
+  //////////////////////
+
+
   REQUIRE( g.degree("a") == 3 );
   REQUIRE( g.degree("c") == 4 );
   REQUIRE( g.degree("g") == 2 );
@@ -108,7 +144,18 @@ TEST_CASE("Directed: Graph::removeEdge is correct", "[weight=1]") {
 
 TEST_CASE("Directed: Graph::removeVertex is correct", "[weight=1]") {
   Graph<Vertex, DirectedEdge> g = createTestDiGraph();
+
+  /////////////////
+  //std::cout<<"Vert:"<<g.numVertices()<<std::endl;
+  //std::cout<<"Edges:"<<g.numEdges()<<std::endl;
+  ////////////////
+
   g.removeVertex("a");
+
+  //std::cout<<"--------"<<std::endl;
+  //std::cout<<"Vert:"<<g.numVertices()<<std::endl;
+  //std::cout<<"Edges:"<<g.numEdges()<<std::endl;
+
   REQUIRE( g.numVertices() == 7 );
   REQUIRE( g.numEdges() == 6 );
   REQUIRE( g.incidentEdges("b").size() == 1 );
